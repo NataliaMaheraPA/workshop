@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>Колізія імені між слеш-командою і скілом</title>
+<desc>Проєктна команда review затінена глобальним скілом review.</desc>
+<g text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">
+<text x="240" y="40">Команди</text><text x="510" y="40">Скіли</text></g>
+<g text-anchor="end" fill="var(--muted,#8B9A94)" font-size="13">
+<text x="110" y="106">проєкт</text><text x="110" y="212">глобально</text></g>
+<rect x="140" y="70" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)"/>
+<text x="240" y="98" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13" font-family="'Space Mono', monospace">.claude/commands/</text>
+<text x="240" y="120" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">затінена, не викликається</text>
+<rect x="410" y="70" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)" stroke-dasharray="4 4"/>
+<text x="510" y="108" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">порожньо</text>
+<rect x="140" y="176" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)" stroke-dasharray="4 4"/>
+<text x="240" y="214" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">порожньо</text>
+<rect x="410" y="176" width="200" height="66" rx="8" fill="none" stroke="var(--warn,#E8A33D)" stroke-width="1.5"/>
+<text x="510" y="204" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="13" font-family="'Space Mono', monospace">~/.claude/skills/</text>
+<text x="510" y="226" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="13" font-weight="500">виграє виклик</text>
+<text x="340" y="282" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">Всередині колонки виграє верхній рядок</text>
+<text x="340" y="304" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="13">Між колонками пріоритет не визначений</text>
+</svg>

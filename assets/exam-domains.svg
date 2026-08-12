@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>Результат іспиту по доменах</title>
+<desc>Чотири домени: агентна архітектура 85, MCP 82, контекст 71, конфігурація Claude Code 62.</desc>
+<g font-size="14" fill="var(--fg,#E8EDEA)">
+<text x="40" y="60">Агентна архітектура й оркестрація</text>
+<text x="40" y="122">Дизайн інструментів і MCP</text>
+<text x="40" y="184">Управління контекстом і надійність</text>
+<text x="40" y="246" font-weight="500">Конфігурація і воркфлоу Claude Code</text>
+</g>
+<g fill="none" stroke="var(--line,#2A3230)" stroke-width="1">
+<rect x="40" y="72" width="520" height="14" rx="7"/>
+<rect x="40" y="134" width="520" height="14" rx="7"/>
+<rect x="40" y="196" width="520" height="14" rx="7"/>
+<rect x="40" y="258" width="520" height="14" rx="7"/>
+</g>
+<rect x="40" y="72" width="442" height="14" rx="7" fill="var(--accent,#6EE7A0)" opacity="0.75"/>
+<rect x="40" y="134" width="426" height="14" rx="7" fill="var(--accent,#6EE7A0)" opacity="0.75"/>
+<rect x="40" y="196" width="369" height="14" rx="7" fill="var(--accent,#6EE7A0)" opacity="0.75"/>
+<rect x="40" y="258" width="322" height="14" rx="7" fill="var(--warn,#E8A33D)"/>
+<g font-size="14" font-weight="500" text-anchor="start">
+<text x="576" y="84" fill="var(--fg,#E8EDEA)">85%</text>
+<text x="576" y="146" fill="var(--fg,#E8EDEA)">82%</text>
+<text x="576" y="208" fill="var(--fg,#E8EDEA)">71%</text>
+<text x="576" y="270" fill="var(--warn,#E8A33D)">62%</text>
+</g>
+</svg>

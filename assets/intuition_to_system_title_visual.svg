@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="42 0 638 266" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>Від інтуїції до системи</title>
+<desc>Одна безперервна лінія: зліва хаотична каракуля, справа впорядковані прямокутні сходи.</desc>
+<defs>
+<marker id="ts-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<path d="M50 140 C78 78, 96 206, 124 122 C142 70, 156 198, 176 132 C192 80, 204 210, 226 150 C240 112, 248 196, 268 144 C282 108, 292 178, 312 148 L352 148 L352 104 L432 104 L432 188 L512 188 L512 124 L620 124" fill="none" stroke="var(--accent,#01dd9a)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ts-arrow)"/>
+<g fill="none" stroke="var(--accent,#01dd9a)" stroke-width="0.5" opacity="0.5">
+<circle cx="352" cy="104" r="4"/>
+<circle cx="432" cy="104" r="4"/>
+<circle cx="432" cy="188" r="4"/>
+<circle cx="512" cy="188" r="4"/>
+<circle cx="512" cy="124" r="4"/>
+</g>
+<text x="180" y="238" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-weight="600" letter-spacing="1.6">ІНТУЇТИВНО</text>
+<text x="180" y="258" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="12">працює, поки не зламається</text>
+<text x="486" y="238" text-anchor="middle" fill="var(--accent,#01dd9a)" font-size="14" font-weight="600" letter-spacing="1.6">СИСТЕМНО</text>
+<text x="486" y="258" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="12">працює щоразу однаково</text>
+</svg>

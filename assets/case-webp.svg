@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 280" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>Конвертація зображень до і після скіла</title>
+<desc>До: агент щоразу вгадує інструмент і потрапляє в цикл помилок. Після: один скрипт, один шлях.</desc>
+<text x="40" y="40" fill="var(--muted,#8B9A94)" font-size="13">Було</text>
+<rect x="40" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--line,#2A3230)"/>
+<g font-size="13" fill="var(--muted,#8B9A94)" font-family="'Space Mono', monospace">
+<text x="60" y="82">sips → фейл</text>
+<text x="60" y="106">npx sharp-cli → мережа</text>
+<text x="60" y="130">підбір прапорців</text>
+<text x="60" y="154">спроба знову</text>
+</g>
+<text x="60" y="184" fill="var(--warn,#E8A33D)" font-size="13" font-weight="500">~5 зайвих викликів щосесії</text>
+<text x="370" y="40" fill="var(--muted,#8B9A94)" font-size="13">Стало</text>
+<rect x="370" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--accent,#6EE7A0)"/>
+<text x="390" y="100" fill="var(--fg,#E8EDEA)" font-size="13" font-family="'Space Mono', monospace">npm run img:webp</text>
+<text x="390" y="128" fill="var(--muted,#8B9A94)" font-size="13">sharp, уже в проєкті</text>
+<text x="390" y="152" fill="var(--muted,#8B9A94)" font-size="13">нічого з мережі</text>
+<text x="390" y="184" fill="var(--accent,#6EE7A0)" font-size="13" font-weight="500">один шлях, вдвічі швидше</text>
+<text x="340" y="240" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">Те, що агент з'ясовує щосесії заново, вигідно зафіксувати один раз</text>
+</svg>

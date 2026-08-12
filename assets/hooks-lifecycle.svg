@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>PreToolUse і PostToolUse у циклі виклику інструменту</title>
+<desc>PreToolUse спрацьовує до виклику і може заблокувати, PostToolUse після і може лише відреагувати.</desc>
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+<rect x="40" y="70" width="150" height="60" rx="8" fill="none" stroke="var(--warn,#E8A33D)"/>
+<text x="115" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-family="'Space Mono', monospace">PreToolUse</text>
+<text x="115" y="115" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="13">може заблокувати</text>
+<line x1="196" y1="100" x2="258" y2="100" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar2)"/>
+<rect x="265" y="70" width="150" height="60" rx="8" fill="var(--line,#2A3230)" stroke="var(--muted,#8B9A94)"/>
+<text x="340" y="105" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Write / Edit</text>
+<line x1="421" y1="100" x2="483" y2="100" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar2)"/>
+<rect x="490" y="70" width="150" height="60" rx="8" fill="none" stroke="var(--accent,#6EE7A0)"/>
+<text x="565" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-family="'Space Mono', monospace">PostToolUse</text>
+<text x="565" y="115" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="13">форматує, лінтить</text>
+<text x="340" y="180" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="14">Виконуються завжди, незалежно від того, що вирішила модель</text>
+<text x="340" y="210" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Треба порадити — CLAUDE.md. Треба гарантувати — хук.</text>
+</svg>

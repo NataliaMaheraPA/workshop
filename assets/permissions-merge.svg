@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<title>Дозволи зливаються, а не перекриваються</title>
+<desc>Звичайний ключ перекривається вищим рівнем, а правила дозволів складаються з обох рівнів.</desc>
+<text x="40" y="40" fill="var(--muted,#8B9A94)" font-size="13">Звичайний ключ</text>
+<rect x="40" y="54" width="250" height="50" rx="8" fill="none" stroke="var(--line,#2A3230)"/>
+<text x="165" y="84" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="14" text-decoration="line-through">глобальне значення</text>
+<rect x="40" y="118" width="250" height="50" rx="8" fill="none" stroke="var(--accent,#6EE7A0)"/>
+<text x="165" y="148" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">проєктне значення</text>
+<text x="165" y="196" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="14" font-weight="500">виграє одне</text>
+<line x1="340" y1="40" x2="340" y2="230" stroke="var(--line,#2A3230)" stroke-width="1"/>
+<text x="390" y="40" fill="var(--muted,#8B9A94)" font-size="13">Правила дозволів</text>
+<rect x="390" y="54" width="250" height="50" rx="8" fill="none" stroke="var(--warn,#E8A33D)"/>
+<text x="515" y="84" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">глобальні дозволи</text>
+<rect x="390" y="118" width="250" height="50" rx="8" fill="none" stroke="var(--warn,#E8A33D)"/>
+<text x="515" y="148" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">проєктні дозволи</text>
+<text x="515" y="196" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="14" font-weight="500">діють обидва</text>
+<text x="340" y="250" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">Короткий список у проєктному файлі — це не весь список</text>
+</svg>
