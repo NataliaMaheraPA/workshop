@@ -547,21 +547,39 @@
 			   O — сітка слайдів
 			   —————————————————————————————————————————— */
 
+			/* сайдбар навігації: слайд лишається видимим, панель не закривається
+			   після переходу — тільки кнопкою або Esc */
 			.overview {
 				position: fixed;
-				inset: 0;
-				background: var(--bg);
-				z-index: 70;
-				padding: 3rem;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 45;
+				width: min(26rem, 32vw);
+				padding: 2.5rem 1.75rem 3rem;
 				overflow-y: auto;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity 0.2s var(--ease);
+				overscroll-behavior: contain;
+				background: var(--card);
+				border-left: 1px solid var(--line);
+				transform: translateX(100%);
+				transition: transform var(--dur) var(--ease);
 			}
 
 			.overview.is-open {
-				opacity: 1;
-				pointer-events: auto;
+				transform: none;
+			}
+
+			/* сітка в сайдбарі — один стовпчик, картки нижчі */
+			.overview .ov-grid {
+				grid-template-columns: 1fr;
+				gap: 0.5rem;
+			}
+
+			.overview .ov-card {
+				min-height: 0;
+				padding: 0.6rem 0.8rem;
+				font-size: 0.875rem;
+				gap: 0.2rem;
 			}
 
 			.overview h3 {
@@ -610,6 +628,30 @@
 			/* смужка ліворуч — до якої частини належить слайд */
 			.ov-card {
 				border-left-width: 3px;
+			}
+
+			.ov-close {
+				position: absolute;
+				top: 1.1rem;
+				right: 1.75rem;
+				width: 2rem;
+				height: 2rem;
+				display: grid;
+				place-items: center;
+				border: 1px solid var(--line);
+				border-radius: 50%;
+				background: transparent;
+				color: var(--muted);
+				font-size: 1.1rem;
+				line-height: 1;
+				cursor: pointer;
+				transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+			}
+
+			.ov-close:hover,
+			.ov-close:focus-visible {
+				color: var(--text);
+				border-color: var(--muted);
 			}
 
 			.ov-part {
@@ -2823,6 +2865,7 @@
 		<div class="blackout" id="blackout"></div>
 
 		<div class="overview" id="overview">
+			<button class="ov-close" id="ovClose" type="button" aria-label="Закрити панель слайдів">×</button>
 			<h3>Слайди</h3>
 			<div class="ov-grid" id="ovMain"></div>
 			<h3>Резервні</h3>
@@ -2912,6 +2955,9 @@
 
 				// шухляда відкрита — переливаємо в неї нотатки нового слайда
 				if (isOpen(els.notesPanel)) syncNotes()
+
+				// сайдбар відкритий — рухаємо в ньому підсвітку за слайдом
+				if (isOpen(els.overview)) markCurrentCard()
 			}
 
 			/* ——— навігація ——— */
@@ -2958,6 +3004,8 @@
 
 			function toggleOverview(force) {
 				const open = force !== undefined ? force : !isOpen(els.overview)
+				// обидві шухляди живуть праворуч — тримаємо відкритою лише одну
+				if (open) toggleNotes(false)
 				els.overview.classList.toggle('is-open', open)
 				els.ovBtn.classList.toggle('is-on', open)
 				els.ovBtn.setAttribute('aria-expanded', String(open))
@@ -2983,7 +3031,8 @@
 			function titleOf(slide, max = 34) {
 				const h = slide.querySelector('h1, h2')
 				if (!h) return '—'
-				let t = h.textContent.replace(/\s+/g, ' ').trim()
+				// між дітьми заголовка ставимо пробіл — textContent їх склеює
+				let t = Array.from(h.childNodes).map(n => n.textContent).join(' ').replace(/\s+/g, ' ').trim()
 				if (t.length <= max) return t
 				const cut = t.slice(0, max)
 				const sp = cut.lastIndexOf(' ')
@@ -3018,8 +3067,8 @@
 						`</span>` +
 						`<span title="${titleOf(slide, 999).replace(/"/g, '&quot;')}">${titleOf(slide)}</span>`
 					card.onclick = () => {
-						toggleOverview(false)
 						goTo(i)
+						markCurrentCard()
 					}
 					cards[i] = card
 					;(isBackup ? backup : main).appendChild(card)
@@ -3185,6 +3234,7 @@
 
 			function toggleNotes(force) {
 				const open = force === undefined ? !isOpen(els.notesPanel) : force
+				if (open) toggleOverview(false)
 				els.notesPanel.classList.toggle('is-open', open)
 				els.notesBtn.classList.toggle('is-on', open)
 				els.notesBtn.setAttribute('aria-expanded', String(open))
@@ -3196,6 +3246,7 @@
 
 			els.notesBtn.onclick = () => toggleNotes()
 			els.ovBtn.onclick = () => toggleOverview()
+			document.getElementById('ovClose').onclick = () => toggleOverview(false)
 
 			document.addEventListener('keydown', e => {
 				// затемнення перехоплює будь-яку клавішу
@@ -3219,12 +3270,12 @@
 					case ' ':
 					case 'PageDown':
 						e.preventDefault()
-						if (!isOpen(els.overview)) next()
+						next()
 						break
 					case 'ArrowLeft':
 					case 'PageUp':
 						e.preventDefault()
-						if (!isOpen(els.overview)) prev()
+						prev()
 						break
 					case 'Home':
 						e.preventDefault()
