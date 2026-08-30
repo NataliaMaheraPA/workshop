@@ -607,9 +607,46 @@
 				outline: none;
 			}
 
+			/* смужка ліворуч — до якої частини належить слайд */
+			.ov-card {
+				border-left-width: 3px;
+			}
+
+			.ov-part {
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 0.6875rem;
+				letter-spacing: 0.08em;
+				color: var(--subtle);
+			}
+
+			.ov-card--p1 .ov-part {
+				color: var(--claude-clay);
+			}
+
+			.ov-card--p2 .ov-part {
+				color: var(--accent);
+			}
+
+			.ov-card--p3 .ov-part {
+				color: var(--sky);
+			}
+
 			.ov-card.is-current {
 				border-color: var(--accent);
 				color: var(--text);
+			}
+
+			/* смужка частини має пережити підсвітку активної картки */
+			.ov-card--p1 {
+				border-left-color: var(--claude-clay);
+			}
+
+			.ov-card--p2 {
+				border-left-color: var(--accent);
+			}
+
+			.ov-card--p3 {
+				border-left-color: var(--sky);
 			}
 
 			.ov-num {
@@ -1287,6 +1324,11 @@
 				border-color: var(--accent);
 			}
 
+			/* друга кнопка в доку — праворуч від «нотатки» */
+			.ov-btn {
+				left: calc(var(--pad-x) + 7.5rem);
+			}
+
 			.notes-btn::before {
 				content: '';
 				width: 6px;
@@ -1822,7 +1864,7 @@
 					<p><strong>І одразу розвію плутанину з соцмереж.</strong> У Anthropic Academy понад двадцять безкоштовних курсів, за кожен дають сертифікат про проходження. Це <strong>не</strong> сертифікація. Сертифікація — проктореваний платний іспит.</p>
 					<p>Тепер чесна арифметика по часу. Три базові курси — приблизно <strong>5 годин</strong>. «Building with the Claude API» — приблизно <strong>14 годин</strong>. Підготовка — приблизно <strong>30 годин</strong>: п’ятнадцять на теорію по доменах, решта — <strong>пробні тести, я прогнала їх дуже багато.</strong></p>
 					<p class="cue">[Слайд розкривається сам, каскадом. Клікати нічого не треба.]</p>
-					<p>І результат — його на слайді немає, скажи голосом: <strong>770 з тисячі</strong> при прохідному 720. А найнижчий бал — <strong>62%</strong> — у домені «Конфігурація і воркфлоу Claude Code». Тобто саме в тому, чим я користуюсь щодня.</p>
+					<p>Результату на слайді немає — скажи голосом те, що вважаєш за потрібне. <span class="cue">[Головне не в балі, а в тому, який домен виявився найслабшим.]</span> <strong>Найнижчий результат у мене був саме в «Конфігурації і воркфлоу Claude Code»</strong> — тобто в тому, чим користуюсь щодня.</p>
 					<p><strong>Це і був головний висновок.</strong> Щоденне використання створює ілюзію, що ти знаєш інструмент. Насправді ти знаєш ту вузьку стежку, якою ходиш.</p>
 				</div>
 				<h2 class="lockup">
@@ -2103,9 +2145,9 @@
 					<p><strong>Що виявилось.</strong> Моя гіпотеза була «виграє проєктне, бо конкретніше». Логічно звучить — і неправильно. Насправді тут спрацювали <strong>два задокументовані правила, і обидва проти мене:</strong></p>
 					<p><strong>Перше: особистий рівень перекриває проєктний.</strong> Не навпаки. Скіл із <code>~/.claude/skills/</code> сильніший за той самий у репо. Для налаштувань ми щойно бачили зворотну логіку — там що ближче до проєкту, то сильніше. А для скілів навпаки, і це легко переплутати.</p>
 					<p><strong>Друге: якщо скіл і команда називаються однаково, виграє скіл.</strong> Тобто мій <code>.claude/commands/review.md</code> програвав двічі.</p>
-					<p>Звідки той скіл узявся: одна встановча дія у червні принесла двадцять сім скілів із чужого пакету. Той, що переміг, у джерелі лежить у теці <code>in-progress</code> — автор сам вважає його недоробленим.</p>
+					<p>Звідки той скіл узявся: <strong>одна встановча дія принесла одразу два десятки скілів</strong> із зовнішнього пакета. Я їх не обирала поштучно — вони приїхали разом.</p>
 					<p><strong>Як я це з'ясувала.</strong> Тут важливий порядок, бо він неочевидний. <strong>Симптом видно одразу: набрала <code>/review</code> — запустилось не те.</strong> І на цьому все, більше жодної підказки. Ніхто не пише «ваша команда затінена», нічого не падає.</p>
-					<p>Питання, яке з цього випливає: <strong>а хто ще претендує на це імʼя?</strong> Відповідає <code>/skills</code> — список усіх доступних скілів, можна фільтрувати за іменем. Набираєш <code>review</code> і бачиш, що на нього претендує ще хтось, і звідки він. Там же <code>t</code> сортує за токенами, тому одразу видно, скільки контексту з'їдають ті двадцять сім.</p>
+					<p>Питання, яке з цього випливає: <strong>а хто ще претендує на це імʼя?</strong> Відповідає <code>/skills</code> — список усіх доступних скілів, можна фільтрувати за іменем. Набираєш <code>review</code> і бачиш, що на нього претендує ще хтось, і звідки він. Там же <code>t</code> сортує за токенами, тому одразу видно, скільки контексту з'їдає кожен.</p>
 					<p>А потім я вже з Claude розібрала, з якого саме пакета цей скіл приїхав і чому.</p>
 					<p class="cue">[Не плутати з <code>/doctor</code> — він про інше: показує, чим <em>ви</em> не користуєтесь і скільки це коштує. Про колегу в тому ж репо він нічого не знає. Це інструмент прибирання, і про нього — на наступному слайді.]</p>
 					<p><strong>Тепер що це означає практично.</strong> Обидва правила задокументовані, тут немає таємниці. Проблема в іншому: <strong>вони дивляться в протилежний бік від того, до чого ви звикли в налаштуваннях.</strong> Там що ближче до проєкту, то сильніше: user, потім project, потім local. А в скілах навпаки — user перекриває project.</p>
@@ -2163,7 +2205,7 @@
 					<p>Чотири поради.</p>
 					<p><strong>Префікс проєкту.</strong> Не називайте команди загальними словами. Підтека дає префікс автоматично.</p>
 					<p><strong>Не тримайте підключеними скіли, якими не користуєтесь.</strong></p>
-					<p><strong>Аудит при встановленні.</strong> Двадцять сім скілів — це двадцять сім зайнятих слів. І беруть їх усі з одного колодязя: <code>review</code>, <code>test</code>, <code>deploy</code>, <code>commit</code>.</p>
+					<p><strong>Аудит при встановленні.</strong> Кожен встановлений скіл — це зайняте слово. І беруть їх усі з одного колодязя: <code>review</code>, <code>test</code>, <code>deploy</code>, <code>commit</code>.</p>
 					<p>І окремо тим, хто, як я, любить ставити собі скіли, щоб потестувати. Це нормально — але так ви створюєте <strong>особистий шар, про який не знає жоден колега.</strong> Тому зробіть ритуалом: <strong>заходячи на проєкт із налаштованим середовищем, спершу подивіться, що є у вас глобально.</strong> Проєктний конфіг ви прочитаєте так чи інакше, а свій накопичений шар — ні, він давно став фоном.</p>
 					<p><strong>Проєкт ви успадковуєте, а глобальний шар приносите з собою.</strong></p>
 				</div>
@@ -2601,6 +2643,7 @@
 					<p>Усе, що агент з'ясовує щосесії заново — вигідно один раз зафіксувати.</p>
 					<p class="cue">[Тут можна показати один кадр результату Figma → код і сказати: якщо цікаво, зроблю про це окремий воркшоп.]</p>
 				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">III</span></span> <span class="part-dash">—</span> Від дизайну до UI</p>
 				<h2>Той самий метод</h2>
 				<p class="lede">Claude вгадував інструмент заново в кожній сесії: то <code>sips</code>, то <code>npx sharp-cli</code>
 					з мережі. Близько <strong>п'яти зайвих викликів</strong> на сесію.</p>
@@ -2792,6 +2835,10 @@
 			нотатки
 		</button>
 
+		<button class="notes-btn ov-btn" id="ovBtn" type="button" aria-controls="overview" aria-expanded="false">
+			слайди
+		</button>
+
 		<aside class="notes-panel" id="notesPanel" aria-live="polite">
 			<h3 id="notesTitle">нотатки спікера</h3>
 			<div class="notes-body" id="notesBody"></div>
@@ -2816,6 +2863,7 @@
 				deck: document.getElementById('deck'),
 				tree: document.getElementById('tree'),
 				notesBtn: document.getElementById('notesBtn'),
+				ovBtn: document.getElementById('ovBtn'),
 				notesPanel: document.getElementById('notesPanel'),
 				notesTitle: document.getElementById('notesTitle'),
 				notesBody: document.getElementById('notesBody'),
@@ -2911,6 +2959,8 @@
 			function toggleOverview(force) {
 				const open = force !== undefined ? force : !isOpen(els.overview)
 				els.overview.classList.toggle('is-open', open)
+				els.ovBtn.classList.toggle('is-on', open)
+				els.ovBtn.setAttribute('aria-expanded', String(open))
 				if (open) markCurrentCard()
 			}
 
@@ -2929,9 +2979,26 @@
 
 			const cards = []
 
-			function titleOf(slide) {
+			// коротка назва для сітки: без крихти частини, обрізана по слову
+			function titleOf(slide, max = 34) {
 				const h = slide.querySelector('h1, h2')
-				return h ? h.textContent.trim() : '—'
+				if (!h) return '—'
+				let t = h.textContent.replace(/\s+/g, ' ').trim()
+				if (t.length <= max) return t
+				const cut = t.slice(0, max)
+				const sp = cut.lastIndexOf(' ')
+				return (sp > max * 0.6 ? cut.slice(0, sp) : cut) + '…'
+			}
+
+			// до якої частини належить слайд — беремо з крихти або заголовка частини
+			const PART_NAMES = { I: 'сетап', II: 'фіча', III: 'UI' }
+
+			function partOf(slide) {
+				const roman = slide.querySelector('.part-crumb .roman, .part-heading .roman')
+				if (roman) return roman.textContent.trim()
+				const tag = slide.querySelector('.tag')
+				const m = tag && tag.textContent.match(/частина\s+(I{1,3})/i)
+				return m ? m[1].toUpperCase() : null
 			}
 
 			function buildOverview() {
@@ -2939,11 +3006,17 @@
 				const backup = document.getElementById('ovBackup')
 				slides.forEach((slide, i) => {
 					const isBackup = slide.hasAttribute('data-backup')
+					const part = isBackup ? null : partOf(slide)
 					const card = document.createElement('button')
-					card.className = 'ov-card' + (isBackup ? ' is-backup' : '')
+					card.className =
+						'ov-card' +
+						(isBackup ? ' is-backup' : '') +
+						(part ? ` ov-card--p${{ I: 1, II: 2, III: 3 }[part]}` : '')
 					card.innerHTML =
-						`<span class="ov-num">${isBackup ? slide.getAttribute('data-backup') : flow.indexOf(slide) + 1}</span>` +
-						`<span>${titleOf(slide)}</span>`
+						`<span class="ov-num">${isBackup ? slide.getAttribute('data-backup') : flow.indexOf(slide) + 1}` +
+						(part ? ` <span class="ov-part">${part} · ${PART_NAMES[part]}</span>` : '') +
+						`</span>` +
+						`<span title="${titleOf(slide, 999).replace(/"/g, '&quot;')}">${titleOf(slide)}</span>`
 					card.onclick = () => {
 						toggleOverview(false)
 						goTo(i)
@@ -3122,6 +3195,7 @@
 			}
 
 			els.notesBtn.onclick = () => toggleNotes()
+			els.ovBtn.onclick = () => toggleOverview()
 
 			document.addEventListener('keydown', e => {
 				// затемнення перехоплює будь-яку клавішу
