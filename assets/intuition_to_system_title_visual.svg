@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="42 0 638 266" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="42 55 638 170" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
 <title>Від інтуїції до системи</title>
 <desc>Одна безперервна лінія: зліва хаотична каракуля, справа впорядковані прямокутні сходи.</desc>
 <defs>
@@ -14,8 +14,4 @@
 <circle cx="512" cy="188" r="4"/>
 <circle cx="512" cy="124" r="4"/>
 </g>
-<text x="180" y="238" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-weight="600" letter-spacing="1.6">ІНТУЇТИВНО</text>
-<text x="180" y="258" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="12">працює, поки не зламається</text>
-<text x="486" y="238" text-anchor="middle" fill="var(--accent,#01dd9a)" font-size="14" font-weight="600" letter-spacing="1.6">СИСТЕМНО</text>
-<text x="486" y="258" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="12">працює щоразу однаково</text>
 </svg>
