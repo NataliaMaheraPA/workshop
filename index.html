@@ -29,6 +29,11 @@
 				--claude-clay: #d97757;
 				--claude-cream: #f0eee6;
 
+				/* кольори індикаторів режиму з теми Claude Code (dark) */
+				--cc-auto: #fab219;
+				--cc-accept: #af87ff;
+				--cc-plan: #4a968c;
+
 				/* ті самі імена, які очікують SVG з assets/ */
 				--fg: var(--text);
 
@@ -107,6 +112,52 @@
 				transform: none;
 			}
 
+			/* автокаскад: вміст проявляється сам після появи слайда, без кліку */
+			.auto-cascade > * {
+				opacity: 0;
+			}
+
+			.slide.is-active .auto-cascade > * {
+				animation: cert-in 0.5s var(--ease) both;
+				animation-delay: 0.35s;
+			}
+
+			.slide.is-active .auto-cascade > *:nth-child(2) {
+				animation-delay: 0.75s;
+			}
+
+			.slide.is-active .auto-cascade > *:nth-child(3) {
+				animation-delay: 1.1s;
+			}
+
+			/* каскад: один клік-фрагмент, але вміст всередині з'являється по черзі,
+			   як на слайді сертифікації */
+			div.frag-cascade[data-fragment] {
+				opacity: 1;
+				transform: none;
+				transition: none;
+			}
+
+			.frag-cascade > * {
+				opacity: 0;
+			}
+
+			.frag-cascade.is-shown > * {
+				animation: cert-in 0.45s var(--ease) both;
+			}
+
+			.frag-cascade.is-shown > *:nth-child(2) {
+				animation-delay: 0.3s;
+			}
+
+			.frag-cascade.is-shown > *:nth-child(3) {
+				animation-delay: 0.5s;
+			}
+
+			.frag-cascade.is-shown > *:nth-child(4) {
+				animation-delay: 0.7s;
+			}
+
 			/* ——————————————————————————————————————————
 			   Типографіка
 			   —————————————————————————————————————————— */
@@ -117,6 +168,116 @@
 				text-transform: uppercase;
 				color: var(--accent);
 				margin-bottom: 1.125rem;
+			}
+
+			/* тег частини й заголовок в один рядок */
+			.part-heading {
+				display: flex;
+				align-items: baseline;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				margin-bottom: 3rem;
+			}
+
+			.part-heading .tag {
+				margin-bottom: 0;
+				font-size: clamp(1.375rem, 2.6vw, 1.75rem);
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				color: var(--claude-clay);
+				display: inline-flex;
+				align-items: baseline;
+				gap: 0.4em;
+			}
+
+			.part-heading .tag .roman {
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 1em;
+				font-weight: 700;
+			}
+
+			.part-heading .part-dash {
+				align-self: center;
+				color: var(--claude-clay);
+				font-weight: 700;
+			}
+
+			.part-heading h2 {
+				margin-bottom: 0;
+				font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+				color: rgba(255, 255, 255, 0.82);
+			}
+
+			/* хлібна крихта частини — на кожному слайді блоку, приглушена */
+			.part-crumb {
+				font-size: 0.75rem;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.45);
+				margin-bottom: 0.85rem;
+			}
+
+			/* «частина I» і тире — фірмовим оранжевим, назва частини — приглушена */
+			.part-crumb .part-label,
+			.part-crumb .part-dash {
+				color: var(--claude-clay);
+				opacity: 0.8;
+			}
+
+			.part-crumb .roman {
+				font-family: 'Space Mono', ui-monospace, monospace;
+			}
+
+			.part-crumb .part-dash {
+				margin: 0 0.15em;
+			}
+
+			/* заголовок після крихти — той самий регістр, що й у заголовку частини */
+			.part-crumb + h2 {
+				font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+				color: rgba(255, 255, 255, 0.82);
+				margin-bottom: 1.125rem;
+			}
+
+			/* міні-підзаголовок теми всередині слайду */
+			.mini-head {
+				margin-top: 2.25rem;
+				margin-bottom: 0.25rem;
+				font-size: clamp(1.0625rem, 1.9vw, 1.25rem);
+				font-weight: 700;
+				color: var(--fg);
+			}
+
+			.mini-head-sub {
+				font-weight: 400;
+				color: var(--muted);
+			}
+
+			/* шлях у заголовку — моно й приглушений, щоб не сперечався з назвою */
+			.h2-path {
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 0.7em;
+				font-weight: 400;
+				color: var(--claude-clay);
+				margin-left: 0.35em;
+			}
+
+			/* міні-заголовок, у якому імена файлів мають лишатись білими */
+			.mini-head--plain,
+			.mini-head--plain code {
+				color: var(--fg);
+			}
+
+			/* стрілка пріоритету — прив'язана до появи свого заголовка,
+			   з невеликою затримкою, щоб спершу прочитався заголовок */
+			.lv-arrow {
+				opacity: 0;
+				transition: opacity 0.45s var(--ease) 0.28s;
+			}
+
+			.mini-head.is-shown + .diagram .lv-arrow {
+				opacity: 1;
 			}
 
 			h1 {
@@ -148,6 +309,11 @@
 				line-height: 1.55;
 			}
 
+			/* коли праворуч дерево — довгі пункти не мають під нього залазити */
+			.deck.has-tree .slide > ul {
+				max-width: 50rem;
+			}
+
 			ul li {
 				padding: 0.4rem 0 0.4rem 1.35rem;
 				position: relative;
@@ -163,6 +329,22 @@
 				height: 6px;
 				background: var(--accent);
 				border-radius: 1px;
+			}
+
+			/* список із глиняної зірочки Claude — та сама, що на слайді сертифікації */
+			ul.star-list li {
+				padding-left: 1.7rem;
+			}
+
+			ul.star-list li::before {
+				content: '';
+				top: calc(0.4rem + 0.415em);
+				width: 0.78em;
+				height: 0.78em;
+				background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke="%23d97757" stroke-width="3.2" stroke-linecap="round"><path d="M12 3.5V20.5"/><path d="M4.6 7.75L19.4 16.25"/><path d="M4.6 16.25L19.4 7.75"/></g></svg>')
+					center / contain no-repeat;
+				border-radius: 0;
+				left: 0;
 			}
 
 			/* лого й бейджі всередині рядка тексту */
@@ -184,9 +366,13 @@
 				mix-blend-mode: screen;
 			}
 
-			/* акцент глиняним кольором Claude */
+			/* акценти кольором: глиняний Claude і зелений PettersonApps */
 			.clay {
 				color: var(--claude-clay);
+			}
+
+			.mint {
+				color: var(--accent);
 			}
 
 			/* лок-ап «Anthropic | Claude Certified» — вирівняні по центру
@@ -238,6 +424,7 @@
 				opacity: 1;
 			}
 
+			.slide--cert.is-active > .stats-title,
 			.slide--cert.is-active > .stats {
 				animation-delay: 1.5s;
 			}
@@ -308,8 +495,10 @@
 			.counter {
 				position: fixed;
 				bottom: 1.35rem;
-				right: 1.5rem;
-				font-size: 0.8rem;
+				left: 50%;
+				transform: translateX(-50%);
+				font-size: 1rem;
+				letter-spacing: 0.04em;
 				color: var(--subtle);
 				font-family: 'Space Mono', ui-monospace, monospace;
 				z-index: 20;
@@ -479,13 +668,22 @@
 			}
 
 			/* лаконічний ряд цифр замість таблиці на чотири рядки */
+			.stats-title {
+				margin-top: 1.75rem;
+				padding-top: 1.25rem;
+				border-top: 1px solid var(--line);
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--accent);
+			}
+
 			.stats {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
 				gap: 1.25rem;
-				margin-top: 1.75rem;
-				padding-top: 1.25rem;
-				border-top: 1px solid var(--line);
+				margin-top: 1rem;
 			}
 
 			.stats-num {
@@ -501,7 +699,7 @@
 				margin-top: 0.3rem;
 				font-size: 0.9375rem;
 				line-height: 1.4;
-				color: var(--muted);
+				color: var(--claude-cream);
 			}
 
 			/* смуга з кількох фото — кадруємо в одну пропорцію,
@@ -576,6 +774,18 @@
 				margin-bottom: 1.375rem;
 			}
 
+			/* підзаголовок слайду — коли лід виконує роль заголовка теми */
+			.lede.subhead {
+				font-size: 24px;
+				font-weight: 400;
+				color: var(--muted);
+				letter-spacing: -0.01em;
+			}
+
+			.lede.subhead strong {
+				font-weight: 600;
+			}
+
 			.after {
 				margin-top: 1.375rem;
 				font-size: clamp(1rem, 1.9vw, 1.1875rem);
@@ -589,6 +799,54 @@
 				color: var(--subtle);
 				line-height: 1.5;
 				max-width: 46rem;
+			}
+
+			/* примітка, яку треба прочитати із залу, а не лише зблизька */
+			.note--lg {
+				font-size: 19px;
+				color: var(--muted);
+			}
+
+			.note--20 {
+				font-size: 20px;
+				color: var(--fg);
+			}
+
+			/* примітка, яку треба читати як твердження, а не виноску */
+			.note--bright {
+				color: var(--fg);
+			}
+
+			/* білий акцент усередині приглушеної примітки */
+			.note-bright {
+				color: var(--fg);
+			}
+
+			/* примітка з акцентною рискою — як у цитати, але тихіша */
+			.note--rule {
+				border-left: 2px solid var(--accent);
+				padding-left: 1.1rem;
+			}
+
+			/* примітка без вкраплень моно — усе одним шрифтом */
+			.note--plain,
+			.note--plain code {
+				font-family: 'Manrope', system-ui, sans-serif;
+				color: var(--fg);
+			}
+
+			/* примітка, яка вводить список — щільніше до нього */
+			.note--tight {
+				margin-bottom: 0.35rem;
+			}
+
+			.note--20 code {
+				font-size: 1em;
+			}
+
+			/* код усередині великої примітки — тим самим кеглем, що й речення */
+			.note--lg code {
+				font-size: 1em;
 			}
 
 			.split {
@@ -607,6 +865,11 @@
 			.diagram {
 				width: 100%;
 				max-width: 62rem;
+			}
+
+			/* коли праворуч стоїть дерево — діаграма не має під нього залазити */
+			.deck.has-tree .diagram {
+				max-width: 50rem;
 			}
 
 			.diagram svg {
@@ -633,6 +896,11 @@
 
 			.diagram--hero svg {
 				max-height: 50vh;
+			}
+
+			.diagram--rules svg {
+				max-height: 24vh;
+				max-width: 46rem;
 			}
 
 			.diagram--cat {
@@ -705,7 +973,7 @@
 				border-radius: 10px;
 				padding: 1.1rem 1.35rem;
 				overflow-x: auto;
-				max-width: 46rem;
+				max-width: 54rem;
 			}
 
 			pre code {
@@ -713,6 +981,152 @@
 				font-size: clamp(1.125rem, 1.4vw, 1.3rem);
 				line-height: 1.5;
 				color: var(--text);
+			}
+
+			/* дрібніший лістинг — для дерев і схем, де важлива компактність */
+			pre.pre--sm code {
+				font-size: clamp(0.9375rem, 1.15vw, 1.0625rem);
+			}
+
+			pre.pre--xs {
+				padding: 0.85rem 1.1rem;
+				width: fit-content;
+			}
+
+			/* плашка обтискає вміст замість того, щоб тягнутись на всю колонку */
+			pre.pre--fit {
+				width: fit-content;
+			}
+
+			/* два лістинги поруч: командний і локальний */
+			.code-pair {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.25rem;
+				align-items: stretch;
+				margin-top: 0.5rem;
+				max-width: 52rem;
+			}
+
+			/* другий лістинг у парі й усе, що під ним, проявляється саме,
+			   одне за одним, без кліків */
+			.code-pair > .auto-in {
+				opacity: 0;
+			}
+
+			.slide.is-active .code-pair > .auto-in {
+				animation: slide-in-right 0.55s var(--ease) both;
+				animation-delay: 0.4s;
+			}
+
+			/* локальний файл приїжджає збоку — видно, що він додається до командного */
+			@keyframes slide-in-right {
+				from {
+					opacity: 0;
+					transform: translateX(28px);
+				}
+				to {
+					opacity: 1;
+					transform: none;
+				}
+			}
+
+			.with-pair {
+				opacity: 0;
+				transform: translateY(10px);
+				transition: opacity 0.45s var(--ease) 0.6s, transform 0.45s var(--ease) 0.6s;
+			}
+
+			.slide.is-active .with-pair {
+				transform: none;
+			}
+
+			.slide.is-active .with-pair {
+				opacity: 1;
+			}
+
+			.slide.is-active .with-pair + .with-pair {
+				transition-delay: 0.8s;
+			}
+
+			.slide.is-active .with-pair + .with-pair + .with-pair {
+				transition-delay: 1s;
+			}
+
+			.slide.is-active .with-pair + .with-pair + .with-pair + .with-pair {
+				transition-delay: 1.2s;
+			}
+
+			/* без min-width колонка розтягується під найдовший рядок коду;
+			   flex-колонка вирівнює обидві плашки в одну висоту */
+			.code-pair > * {
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.code-pair > * > pre {
+				flex: 1;
+			}
+
+			.code-pair pre {
+				max-width: none;
+				width: auto;
+				padding: 0.8rem 1rem;
+			}
+
+			.code-pair pre code {
+				font-size: clamp(0.875rem, 1.05vw, 1.0625rem);
+				line-height: 1.5;
+			}
+
+			.code-label {
+				margin-bottom: 0.45rem;
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+				color: var(--accent);
+			}
+
+			.code-label--local {
+				color: var(--claude-clay);
+			}
+
+			/* опис окремим рядком — інакше довший підпис переноситься
+			   і плашки стартують на різній висоті */
+			.code-label span {
+				display: block;
+				margin-top: 0.1rem;
+				font-family: 'Manrope', system-ui, sans-serif;
+				color: var(--muted);
+				font-size: 0.8em;
+			}
+
+			/* URL у таблиці посилань */
+			.link {
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 0.95em;
+				color: var(--sky);
+				text-decoration: none;
+				border-bottom: 1px solid rgba(157, 212, 240, 0.35);
+				transition: border-color var(--dur) var(--ease);
+			}
+
+			.link:hover {
+				border-bottom-color: var(--sky);
+			}
+
+			/* приписка в тому ж рядку, приглушена */
+			.code-label .code-label-note {
+				display: inline;
+				margin-top: 0;
+				margin-left: 0.5em;
+				font-family: inherit;
+				font-size: 0.85em;
+				color: var(--subtle);
+			}
+
+			pre.pre--xs code {
+				font-size: clamp(0.8125rem, 0.95vw, 0.9375rem);
 			}
 
 			.j-key {
@@ -725,6 +1139,402 @@
 				color: var(--subtle);
 			}
 
+			/* ——————————————————————————————————————————
+			   Живе дерево проєкту праворуч: обростає файлами
+			   в міру того, як ми про них розповідаємо
+			   —————————————————————————————————————————— */
+
+			.deck {
+				transition: padding var(--dur) var(--ease);
+			}
+
+			.deck.has-tree {
+				padding-right: 22rem;
+			}
+
+			.tree {
+				position: fixed;
+				top: 50%;
+				right: 3rem;
+				transform: translateY(-50%);
+				z-index: 15;
+				width: 20.5rem;
+				padding-left: 1.5rem;
+				border-left: 1px solid var(--line);
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 0.9375rem;
+				line-height: 1.8;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity var(--dur) var(--ease);
+			}
+
+			.tree.is-on {
+				opacity: 1;
+			}
+
+			.tree-root {
+				margin-bottom: 0.5rem;
+				color: var(--claude-cream);
+				font-weight: 700;
+			}
+
+			.tree-row {
+				display: block;
+				white-space: pre;
+				color: var(--subtle);
+			}
+
+			/* сполучні лінії дерева тримаємо максимально тихими */
+			.tree-pipe {
+				color: rgba(255, 255, 255, 0.16);
+			}
+
+			.tree-dir {
+				color: var(--muted);
+			}
+
+			.tree-file {
+				color: var(--muted);
+			}
+
+			/* файл, про який ідеться саме на цьому слайді */
+			.tree-row.is-new .tree-file,
+			.tree-row.is-new .tree-dir {
+				color: var(--claude-clay);
+			}
+
+			.tree-row.is-new {
+				animation: tree-in 0.34s var(--ease) both;
+			}
+
+			.tree-row.is-hl .tree-file,
+			.tree-row.is-hl .tree-dir {
+				color: var(--claude-cream);
+			}
+
+			/* те, про що слайд говорить прямо зараз — тим самим акцентом */
+			.tree-row.is-mint .tree-file,
+			.tree-row.is-mint .tree-dir {
+				color: var(--claude-clay);
+			}
+
+			/* .gitignore — службовий файл, тримаємо його тихим за будь-якого стану */
+			.tree-row[data-name='.gitignore'] .tree-file {
+				color: rgba(255, 255, 255, 0.38);
+			}
+
+			.tree-row.is-mint {
+				animation: tree-in 0.34s var(--ease) both;
+			}
+
+			@keyframes tree-in {
+				from {
+					opacity: 0;
+					transform: translateX(10px);
+				}
+				to {
+					opacity: 1;
+					transform: none;
+				}
+			}
+
+			@media (max-width: 1200px) {
+				.deck.has-tree {
+					padding-right: 0;
+				}
+
+				.tree {
+					display: none;
+				}
+			}
+
+			/* ——————————————————————————————————————————
+			   Нотатки спікера: кнопка + шухляда праворуч
+			   —————————————————————————————————————————— */
+
+			.notes {
+				display: none;
+			}
+
+			.notes-btn {
+				position: fixed;
+				left: var(--pad-x);
+				bottom: 1.75rem;
+				z-index: 40;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.4rem 0.7rem;
+				border: 1px solid var(--line);
+				border-radius: 999px;
+				background: transparent;
+				color: var(--subtle);
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 0.75rem;
+				cursor: pointer;
+				transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+			}
+
+			.notes-btn:hover,
+			.notes-btn:focus-visible {
+				color: var(--text);
+				border-color: var(--muted);
+			}
+
+			.notes-btn.is-on {
+				color: var(--accent);
+				border-color: var(--accent);
+			}
+
+			.notes-btn::before {
+				content: '';
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: currentColor;
+			}
+
+			/* шухляда праворуч: текстовий контент слайдів живе злІва,
+			   тому вона його не перекриває */
+			.notes-panel {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 45;
+				width: min(32rem, 38vw);
+				padding: 2.5rem 2.25rem 3rem;
+				overflow-y: auto;
+				overscroll-behavior: contain;
+				background: var(--card);
+				border-left: 1px solid var(--line);
+				transform: translateX(100%);
+				transition: transform var(--dur) var(--ease);
+			}
+
+			.notes-panel.is-open {
+				transform: none;
+			}
+
+			.notes-panel h3 {
+				margin-bottom: 1.25rem;
+				padding-bottom: 0.75rem;
+				border-bottom: 1px solid var(--line);
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--accent);
+			}
+
+			.notes-body {
+				font-size: 1rem;
+				line-height: 1.6;
+				color: var(--muted);
+			}
+
+			.notes-body p {
+				margin-bottom: 0.9rem;
+			}
+
+			.notes-body p:last-child {
+				margin-bottom: 0;
+			}
+
+			.notes-body strong {
+				color: var(--text);
+				font-weight: 600;
+			}
+
+			.notes-body code {
+				font-size: 0.9em;
+				color: var(--claude-cream);
+			}
+
+			/* ремарки на кшталт «[дай паузу]» — не для зачитування */
+			.notes-body .cue {
+				display: block;
+				margin: 1rem 0;
+				padding-left: 0.85rem;
+				border-left: 2px solid var(--warn);
+				font-style: normal;
+				font-size: 0.9375rem;
+				color: var(--subtle);
+			}
+
+			.notes-empty {
+				color: var(--subtle);
+				font-size: 0.9375rem;
+			}
+
+			@media (max-width: 900px) {
+				.notes-panel {
+					width: 100%;
+				}
+			}
+
+			/* роздільник блоку — одне слово на весь слайд */
+			.slide--divider h2 {
+				font-size: clamp(3rem, 8.5vw, 6rem);
+				letter-spacing: -0.03em;
+				margin-bottom: 0.75rem;
+			}
+
+			.slide--divider .lede {
+				font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+				max-width: 34rem;
+			}
+
+			/* план воркшопу: римська цифра як маркер, без крапок */
+			.plan {
+				display: grid;
+				gap: 1.75rem;
+				max-width: 52rem;
+				margin-top: 0.5rem;
+			}
+
+			.plan-item {
+				display: grid;
+				grid-template-columns: 3rem 1fr;
+				gap: 1.25rem;
+			}
+
+			.plan-num {
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: 1.5rem;
+				font-weight: 700;
+				line-height: 1.2;
+				color: var(--claude-clay);
+			}
+
+			.plan-title {
+				font-size: clamp(1.1875rem, 2.2vw, 1.5rem);
+				font-weight: 600;
+				line-height: 1.25;
+			}
+
+			.plan-topics {
+				margin-top: 0.4rem;
+				font-size: clamp(1rem, 1.85vw, 1.1875rem);
+				font-weight: 500;
+				line-height: 1.55;
+				color: var(--muted);
+			}
+
+			.plan-topics .tsep {
+				display: inline-block;
+				margin: 0 0.55em;
+				color: var(--claude-clay);
+				font-weight: 700;
+			}
+
+			/* індикатори режиму дозволів — як їх малює Claude Code у терміналі */
+			.modes {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem 2.25rem;
+				margin-top: 1.5rem;
+				font-family: 'Space Mono', ui-monospace, monospace;
+				font-size: clamp(1rem, 1.6vw, 1.1875rem);
+			}
+
+			.mode {
+				display: inline-flex;
+				align-items: baseline;
+				gap: 0.5rem;
+			}
+
+			.mode-sym {
+				display: inline-block;
+				min-width: 1.6em;
+				font-family: ui-monospace, 'Menlo', monospace;
+			}
+
+			.mode--auto {
+				color: var(--cc-auto);
+			}
+
+			.mode--accept {
+				color: var(--cc-accept);
+			}
+
+			/* підказка про перемикач — тримається праворуч від набору режимів */
+			.mode-hint {
+				margin-left: auto;
+				align-self: center;
+				color: var(--subtle);
+				font-size: 0.875em;
+			}
+
+			.mode--plan {
+				color: var(--cc-plan);
+			}
+
+			.mode--manual {
+				color: var(--muted);
+			}
+
+			/* матриця рішень: кілька колонок, усі вирівняні влів */
+			.matrix {
+				width: 100%;
+				max-width: 54rem;
+				border-collapse: collapse;
+				font-size: clamp(0.9375rem, 1.8vw, 1.125rem);
+			}
+
+			.matrix th {
+				text-align: left;
+				padding: 0 1.25rem 0.6rem 0;
+				border-bottom: 1px solid var(--line);
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--accent);
+			}
+
+			.matrix td {
+				padding: 0.7rem 1.25rem 0.7rem 0;
+				border-bottom: 1px solid var(--line);
+				color: var(--muted);
+				vertical-align: top;
+			}
+
+			.matrix td:first-child {
+				color: var(--text);
+				font-weight: 600;
+			}
+
+			.matrix tr:last-child td {
+				border-bottom: none;
+			}
+
+			/* приглушений другий рядок у комірці таблиці */
+			.cell-note {
+				font-size: 0.8em;
+				font-weight: 400;
+				color: var(--muted);
+			}
+
+			/* вузька таблиця — коли вміст короткий і лінії не мають тягнутись через увесь слайд */
+			.matrix--narrow {
+				max-width: 36rem;
+			}
+
+			/* проміжна ширина — лінії коротші, але текст ще не ламається */
+			.matrix--mid {
+				max-width: 46rem;
+			}
+
+			.matrix--mid td:first-child {
+				white-space: nowrap;
+			}
+
+			.matrix code {
+				font-size: 0.92em;
+			}
+
 			/* цитата-теза */
 			.quote {
 				border-left: 2px solid var(--accent);
@@ -733,6 +1543,32 @@
 				line-height: 1.4;
 				font-weight: 600;
 				max-width: 44rem;
+			}
+
+			/* стриманіша цитата — коли вона підсумовує список, а не відкриває тему */
+			.quote--sm {
+				font-size: 18px;
+			}
+
+			/* цитата з глиняною рискою — коли вона закриває слайд, а не відкриває тему */
+			.quote--dim {
+				border-left-color: var(--claude-clay);
+				color: var(--text);
+			}
+
+			/* примітка, після якої йде окремий блок — потрібне повітря */
+			.note--gap {
+				margin-bottom: 2.25rem;
+			}
+
+			/* список із повітрям між пунктами і відступом під ним */
+			.list--spaced li {
+				padding-top: 0.6rem;
+				padding-bottom: 0.6rem;
+			}
+
+			.list--spaced {
+				margin-bottom: 1rem;
 			}
 
 			.quote cite {
@@ -836,6 +1672,12 @@
 					animation: none !important;
 					opacity: 1 !important;
 				}
+				.tree-row.is-new {
+					animation: none !important;
+				}
+				.deck {
+					transition: none !important;
+				}
 			}
 
 			@media (max-width: 1400px) {
@@ -853,6 +1695,10 @@
 		<main class="deck" id="deck">
 			<!-- 1 ————————————————————————————————— титул -->
 			<section class="slide slide--title">
+				<div class="notes">
+					<p>Привіт. Мене звати Наталі, я фронтенд-розробниця.</p>
+					<p>Я вже давно працюю з Claude щодня. У червні склала іспит на сертифікацію Anthropic — і сьогодні розкажу не про те, як навчилась користуватись інструментом, а про те, <strong>як перебудувала роботу з ним після того, як розібралась у механіці</strong>.</p>
+				</div>
 				<p class="tag">PettersonApps · воркшоп</p>
 				<h1>
 					<svg class="cc-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Claude">
@@ -875,32 +1721,39 @@
 					</svg><span class="cc-word">Claude&nbsp;Code</span><span class="title-sub">від інтуїції до системи</span>
 				</h1>
 				<div class="diagram diagram--hero">
-					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="42 0 638 266" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="42 55 638 170" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
 						<title>Від інтуїції до системи</title>
-						<desc>Одна безперервна лінія: зліва хаотична каракуля, справа впорядковані прямокутні сходи.</desc>
+						<desc>Одна безперервна лінія: зліва зелена хаотична каракуля, справа — оранжеві впорядковані прямокутні сходи.</desc>
 						<defs>
 							<marker id="ts-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
 								<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 							</marker>
 						</defs>
-						<path d="M50 140 C78 78, 96 206, 124 122 C142 70, 156 198, 176 132 C192 80, 204 210, 226 150 C240 112, 248 196, 268 144 C282 108, 292 178, 312 148 L352 148 L352 104 L432 104 L432 188 L512 188 L512 124 L620 124" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ts-arrow)"/>
-						<g fill="none" stroke="var(--accent)" stroke-width="0.5" opacity="0.5">
+						<!-- інтуїція: хаотична каракуля -->
+						<path d="M50 140 C78 78, 96 206, 124 122 C142 70, 156 198, 176 132 C192 80, 204 210, 226 150 C240 112, 248 196, 268 144 C282 108, 292 178, 312 148 L352 148" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<!-- система: від першого прямого кута лінія стає глиняною -->
+						<path d="M352 148 L352 104 L432 104 L432 188 L512 188 L512 124 L620 124" fill="none" stroke="var(--claude-clay)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ts-arrow)"/>
+						<g fill="none" stroke="var(--claude-clay)" stroke-width="0.5" opacity="0.5">
+							<circle cx="352" cy="148" r="4"/>
 							<circle cx="352" cy="104" r="4"/>
 							<circle cx="432" cy="104" r="4"/>
 							<circle cx="432" cy="188" r="4"/>
 							<circle cx="512" cy="188" r="4"/>
 							<circle cx="512" cy="124" r="4"/>
 						</g>
-						<text x="180" y="238" text-anchor="middle" fill="var(--fg)" font-size="14" font-weight="600" letter-spacing="1.6">ІНТУЇТИВНО</text>
-						<text x="180" y="258" text-anchor="middle" fill="var(--muted)" font-size="12">працює, поки не зламається</text>
-						<text x="486" y="238" text-anchor="middle" fill="var(--accent)" font-size="14" font-weight="600" letter-spacing="1.6">СИСТЕМНО</text>
-						<text x="486" y="258" text-anchor="middle" fill="var(--muted)" font-size="12">працює щоразу однаково</text>
 					</svg>
 				</div>
 			</section>
 
 			<!-- 2 ————————————————————————————————— вступ: усі знають, що буде далі -->
 			<section class="slide">
+				<div class="notes">
+					<p>Перед тим, як почнемо — коротко про рамку.</p>
+					<p>Тема ШІ зараз лунає звідусіль. Stanford читає курс «The Modern Software Developer», і перший тиждень там — внутрішня механіка кодинг-агентів. Роберт Мартін, той самий, що написав Clean Code, каже, що не читає жодного рядка коду своїх агентів. Стрічка тим часом ділить наше майбутнє між вайб-кодингом і фермерством у 2027-му. <strong>А ролі за два роки помінялися місцями.</strong></p>
+					<p class="cue">[Чотири картинки. Не переказуй кожну — вони підписані. Пауза 3–4 секунди, останню залиш на смішок.]</p>
+					<p>Прогнози різні, і кожен звучить переконливо. Я не збираюсь додавати до них ще один.</p>
+					<p><strong>Я не буду грузити вас прогнозами.</strong> Натомість — про те, що працює вже зараз: як вибудувати рутину навколо агента системно, а не навпомацки. Плюс власний досвід і кілька речей, які мене самі здивували.</p>
+				</div>
 				<h2>Усі знають, що буде далі…</h2>
 				<div class="strip">
 					<figure class="shot">
@@ -913,11 +1766,11 @@
 					</figure>
 					<figure class="shot shot--fill">
 						<img src="assets/image5.jpg" alt="Мем: 2022 — студент, 2023 — розробник, 2024 — промпт-інженер, 2025 — вайб-кодер, 2026 — нянька ШІ-агентів, 2027 — фермер" />
-						<figcaption>Розійшлось мережами</figcaption>
+						<figcaption>Настрої в мережах</figcaption>
 					</figure>
-					<figure class="shot shot--fill">
-						<img src="assets/image7.jpg" alt="Кіт із підписом: що б у тебе не сталось, повторюй — не дивлячись на весь капець, ти сьогодні молодець" />
-						<figcaption>Коти з моральною підтримкою</figcaption>
+					<figure class="shot">
+						<img src="assets/image8.jpg" alt="Мем на два кадри. 2024: силует печерної людини з логотипами Claude і OpenAI, над нею замахується києм силует із підписом «Me». 2026: неандерталець із підписом «Me» стоїть осторонь, а двоє чоловіків у костюмах із логотипами OpenAI і Claude розмовляють між собою" />
+						<figcaption>Меми про зміну ролей</figcaption>
 					</figure>
 				</div>
 				<div class="split split--wide">
@@ -958,20 +1811,20 @@
 				</div>
 			</section>
 
-			<!-- 3 ————————————————————————————————— про що не буде -->
-			<section class="slide">
-				<h2>Про що не буде</h2>
-				<p class="lede">Не про те, що таке CLAUDE.md і як встановити Claude Code.</p>
-				<ul>
-					<li data-fragment>Механіка, яку ми використовуємо наосліп — і яка ламається саме тому</li>
-					<li data-fragment>Метод: як я вирішую, що варто закріпити в конфігу, а що ні</li>
-					<li data-fragment>Робота з контекстом між сесіями</li>
-				</ul>
-				<p class="note" data-fragment>Figma MCP свідомо не беру — окрема тема на цілий воркшоп.</p>
-			</section>
-
-			<!-- 4 ————————————————————————————————— Claude Certified -->
+			<!-- 3 ————————————————————————————————— Claude Certified -->
 			<section class="slide slide--cert">
+				<div class="notes">
+					<p>Спершу про механіку іспиту, бо це перше, що всі питають.</p>
+					<p>Сто двадцять хвилин, шістдесят питань, множинний вибір. Прохідний бал — <strong>720 з тисячі</strong>. Сто двадцять п’ять доларів, сертифікат валідний дванадцять місяців.</p>
+					<p>Іспит <strong>проктореться</strong>: запис екрану, запис звуку, ще низка перевірок. Проводить Pearson VUE — можна складати онлайн з дому або в тестовому центрі.</p>
+					<p>Коли я здавала, у каталозі був один-єдиний іспит. Зараз їх чотири під різні ролі: Associate для бізнес-користувачів, Developer для тих, хто будує на API, і два архітекторські — Foundations і Professional.</p>
+					<p>Нюанс: <strong>зареєструватись можна лише через партнерську програму.</strong> Наша компанія має партнерство, тому я змогла. Але поріг нижчий, ніж звучить — вступ до Claude Partner Network стартує безкоштовно на базовому рівні.</p>
+					<p><strong>І одразу розвію плутанину з соцмереж.</strong> У Anthropic Academy понад двадцять безкоштовних курсів, за кожен дають сертифікат про проходження. Це <strong>не</strong> сертифікація. Сертифікація — проктореваний платний іспит.</p>
+					<p>Тепер чесна арифметика по часу. Три базові курси — приблизно <strong>5 годин</strong>. «Building with the Claude API» — приблизно <strong>14 годин</strong>. Підготовка — приблизно <strong>30 годин</strong>: п’ятнадцять на теорію по доменах, решта — <strong>пробні тести, я прогнала їх дуже багато.</strong></p>
+					<p class="cue">[Слайд розкривається сам, каскадом. Клікати нічого не треба.]</p>
+					<p>І результат — його на слайді немає, скажи голосом: <strong>770 з тисячі</strong> при прохідному 720. А найнижчий бал — <strong>62%</strong> — у домені «Конфігурація і воркфлоу Claude Code». Тобто саме в тому, чим я користуюсь щодня.</p>
+					<p><strong>Це і був головний висновок.</strong> Щоденне використання створює ілюзію, що ти знаєш інструмент. Насправді ти знаєш ту вузьку стежку, якою ходиш.</p>
+				</div>
 				<h2 class="lockup">
 					<img class="mark mark--brand" src="assets/anthropic-wordmark.png" alt="Anthropic" />
 					<span class="lockup-bar" aria-hidden="true"></span>
@@ -979,7 +1832,7 @@
 				</h2>
 				<div class="split split--wide">
 					<ul>
-						<li><strong>Чотири іспити під різні ролі:</strong> <span class="clay">Associate, Developer, Architect Foundations і Professional</span></li>
+						<li><strong>Чотири іспити під різні ролі:</strong> <span class="clay">Associate, Developer, Architect Foundations and Professional</span></li>
 						<li>120 хвилин, 60 питань, прохідний — <strong>720 з 1000</strong></li>
 						<li><strong>Прокторований:</strong> запис екрану і звуку, Pearson VUE — онлайн або тестовий центр</li>
 						<li>Реєстрація <strong>лише через партнерську програму</strong></li>
@@ -994,336 +1847,716 @@
 						</figure>
 					</div>
 				</div>
+				<p class="stats-title">Час на підготовку та курси</p>
 				<div class="stats">
-					<div><span class="stats-num">~5 год</span><span class="stats-cap">три базові курси</span></div>
-					<div><span class="stats-num">~14 год</span><span class="stats-cap">Building with the Claude API</span></div>
-					<div><span class="stats-num">~30 год</span><span class="stats-cap">підготовка: ~15 теорія, решта — мок-тести</span></div>
+					<div><span class="stats-num">~5 год</span><span class="stats-cap">Три базові курси</span></div>
+					<div><span class="stats-num">~14 год</span><span class="stats-cap">Курс Building with the Claude API</span></div>
+					<div><span class="stats-num">~30 год</span><span class="stats-cap">Підготовка до сертифікації: теорія, мок-тести і практика в терміналі</span></div>
 				</div>
 			</section>
 
-			<!-- 5 ————————————————————————————————— що змінилось у мисленні -->
+			<!-- 4 ————————————————————————————————— план воркшопу -->
 			<section class="slide">
-				<h2>Що змінилось у мисленні</h2>
-				<ul>
-					<li data-fragment>
-						<strong>Декомпозую задачу для агента, а не для себе.</strong> Що він з'ясує сам, що я даю
-						готовим, де точка перевірки
-					</li>
-					<li data-fragment>
-						<strong>Перестала використовувати патерни наосліп.</strong> Субагенти, координатор,
-						планування всередині — тепер розумію механіку
-					</li>
-					<li data-fragment>
-						<strong>Почала застосовувати скіли.</strong> Основний важіль, щоб не пояснювати одне й те
-						саме щоразу
-					</li>
-				</ul>
+				<div class="notes">
+					<p>Три послідовні напрямки.</p>
+					<p><strong>Перший — сетап репозиторію.</strong> Те, що я налаштовую на старті будь-якого проєкту: CLAUDE.md, дозволи, хуки, свої команди.</p>
+					<p><strong>Другий — робота над фічею.</strong> Планування окремо від виконання, субагенти, контроль контексту.</p>
+					<p><strong>Третій — від дизайну до UI.</strong> Figma MCP і метод, який з нього виріс.</p>
+					<p>Одразу окреслю рамки: <strong>я не розповідатиму, що таке CLAUDE.md і як встановити Claude Code.</strong> Виходжу з того, що більшість із вас цим уже користується, і витрачати ваш час на основи — неповага.</p>
+					<p>Figma MCP свідомо не беру глибоко — окрема тема на цілий воркшоп, і я бачила її в побажаннях з опитування. Якщо буде інтерес — зроблю наступного разу.</p>
+				</div>
+				<h2>План на сьогодні</h2>
+				<div class="plan">
+					<div class="plan-item">
+						<span class="plan-num">I</span>
+						<div>
+							<p class="plan-title">Нюанси сетапу проєкту</p>
+							<p class="plan-topics"><code class="mint">4</code> рівні налаштувань<span class="tsep">·</span><span class="mint">CLAUDE.md</span>, який
+								недооцінюють<span class="tsep">·</span>дозволи vs <span class="mint">Pre/Post tool hooks</span><span class="tsep">·</span>колізії
+								імен команд<span class="tsep">·</span>чекліст для вже засетапленого репо</p>
+						</div>
+					</div>
+					<div class="plan-item" data-fragment>
+						<span class="plan-num">II</span>
+						<div>
+							<p class="plan-title">Робота над фічею</p>
+							<p class="plan-topics">планування окремо від виконання<span class="tsep">·</span>субагенти й
+								<code>context: fork</code><span class="tsep">·</span>контроль контексту<span class="tsep">·</span><code>/handoff</code></p>
+						</div>
+					</div>
+					<div class="plan-item" data-fragment>
+						<span class="plan-num">III</span>
+						<div>
+							<p class="plan-title">Від дизайну до UI</p>
+							<p class="plan-topics">Figma MCP і метод, який з нього виріс</p>
+						</div>
+					</div>
+				</div>
 			</section>
 
-			<!-- 6 ————————————————————————————————— рівні конфігу -->
-			<section class="slide">
-				<h2>Рівні конфігу</h2>
-				<div class="diagram">
-					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 400" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
-						<title>Пріоритет налаштувань Claude Code</title>
-						<desc>П'ять рівнів налаштувань, від глобального внизу до managed угорі.</desc>
+			<!-- 5 ————————————————————————————————— частина I: нюанси сетапу + CLAUDE.md база -->
+			<section class="slide" data-tree="CLAUDE.md|.claude/">
+				<div class="notes">
+					<p>Далі — моя рутина. Це те, що я налаштовую на старті будь-якого проєкту, і те, до чого я дійшла не одразу.</p>
+					<p><strong>CLAUDE.md — порадити. Хук — гарантувати собі. CI — гарантувати всім.</strong> Це наскрізна лінія цього блоку — драбина з трьох щаблів, кожен наступний закриває те, чого не вміє попередній. Повернусь до неї в кінці.</p>
+					<p>Почнімо з файлу, який є у всіх, і саме тому його ніхто не переглядає.</p>
+					<p>Головне, що варто тримати в голові: <strong>це не документація. Це README для агента.</strong> А довгий README не читає ніхто — LLM теж.</p>
+					<p>І він вантажиться <strong>в кожен запит.</strong> Не раз на сесію — щоразу. Тобто ви за нього платите постійно.</p>
+					<p>Звідси правило, яке я забрала з сертифікації: <strong>кожен рядок має змінювати поведінку.</strong> Не змінює — видаляйте. Простий тест, який проходить від сили половина рядків у типовому файлі.</p>
+					<p>А ось цифри, які мене свого часу здивували. До 250 рядків — цільова зона, весь файл справді в фокусі. Від 250 до 400 — <strong>середина починає ігноруватись.</strong> Класичний ефект lost in the middle: модель добре тримає початок і кінець, а середина пливе. Понад 400 — файл існує, але не діє.</p>
+					<p>І ось це — <strong>найгірший зі станів. Не порожній файл, а ілюзія налаштованого репо.</strong> Ви впевнені, що правила є, вони закомічені, ви на них посилаєтесь — а агент їх не бачить. І ви навіть не знаєте, які саме.</p>
+					<p>Три категорії, які з'їдають місце і не дають нічого. <strong>Те, що агент прочитає сам за дві секунди.</strong> Дерево тек, список залежностей із <code>package.json</code>. Він відкриє і подивиться — не треба це дублювати.</p>
+					<p><strong>Загальні best practices.</strong> «Пиши чистий код», «додавай типи», «дотримуйся SOLID». Модель це знає. Ви платите токенами за нагадування того, що вона й так робить.</p>
+					<p><strong>Довгі приклади коду.</strong> Роздувають файл сильніше за все інше. Їхнє місце — у скілі, який підтягнеться, коли буде потрібен.</p>
+				</div>
+				<div class="part-heading">
+					<p class="tag">частина <span class="roman">I</span></p>
+					<span class="part-dash">—</span>
+					<h2>Нюанси сетапу проєкту</h2>
+				</div>
+				<p class="lede subhead"><code style="font-size: 1em">CLAUDE.md</code> — README для агента. Вантажиться <strong>в кожен запит</strong> — оплачується щоразу. <strong>Кожен рядок має змінювати поведінку.</strong></p>
+				<div class="auto-cascade">
+					<p class="mini-head">Довгий README не читає ніхто — LLM теж:</p>
+					<table class="matrix matrix--narrow">
+						<tr>
+							<td><code class="clay">150–250</code></td>
+							<td>цільова зона — весь файл у фокусі</td>
+						</tr>
+						<tr>
+							<td><code class="clay">250–400</code></td>
+							<td>середина ігнорується — <em>lost in the middle</em></td>
+						</tr>
+						<tr>
+							<td><code class="clay">400+</code></td>
+							<td>файл існує, але не діє</td>
+						</tr>
+					</table>
+				</div>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Що не має там лежати:</p>
+					<ul class="star-list">
+						<li>Те, що агент прочитає сам за 2 секунди — <strong>дерево тек, залежності</strong></li>
+						<li>Загальні best practices — «пиши чистий код», «додавай типи». <strong>Модель це знає</strong></li>
+						<li>Довгі приклади коду → <strong>у скіл</strong>, а документація → <strong>посиланням</strong></li>
+					</ul>
+				</div>
+			</section>
+
+			<!-- 6 ————————————————————————————————— замість прикладів — джерело -->
+			<section class="slide" data-tree=".claude/rules/|.mcp.json" data-tree-mint=".claude/rules/|.mcp.json" data-tree-hl="CLAUDE.md">
+				<div class="notes">
+					<p>Ми щойно сказали, чого в CLAUDE.md бути не має. Логічне питання: <strong>а що тоді писати замість цього?</strong></p>
+					<p>Відповідь, до якої я дійшла: <strong>CLAUDE.md має казати, де шукати, а не переказувати, що там написано.</strong></p>
+					<p>Приклад коду у файлі має три вади. <strong>Перша</strong> — роздуває файл, ми про це вже говорили. <strong>Друга</strong> — тихо старіє: бібліотека оновилась, ваш приклад ні, і ви про це не дізнаєтесь. <strong>Третя</strong> — дублює те, що автори бібліотеки вже задокументували ретельніше за вас.</p>
+					<p>Посилання ж коштує один рядок і не протухає.</p>
+					<p><strong><code>context7</code></strong> — MCP-сервер, який підтягує актуальну документацію бібліотеки просто в сесію. Замість того щоб описувати у файлі, як писати запити в Prisma, я пишу правило: <strong>перед роботою з бібліотекою візьми доки через context7.</strong> І він приносить те, що є зараз, а не те, що модель пам'ятає з тренування.</p>
+					<p><strong>MDN</strong> — те саме для веб-платформи. І тут приємна новина: <strong>у MDN тепер є власний офіційний MCP-сервер.</strong> Він хоститься в Mozilla, локально ставити нічого не треба, авторизація не потрібна: <code>claude mcp add --transport http mdn https://mcp.mdn.mozilla.net/</code></p>
+					<p>Він дає не лише доки, а й <strong>дані про сумісність браузерів</strong> — те, що модель найчастіше памʼятає застаріло. Mozilla пише, що відповіді точніші й приблизно вдвічі швидші, бо агенту не треба парсити HTML. Формально це поки що експеримент.</p>
+					<p><strong>Будь-яка офіційна документація</strong> — фреймворк, SDK, внутрішня платформа компанії. Ось для неї MCP зазвичай немає, тому вона йде звичайним посиланням.</p>
+					<p><strong>Тепер найпрактичніше: куди це фізично класти.</strong></p>
+					<p><strong>context7 і MDN — це MCP-сервери</strong>, тому вони йдуть не в CLAUDE.md, а в конфіг MCP. Найпростіше — <code>claude mcp add</code>. Якщо хочете, щоб сервер бачила вся команда — додайте з проєктним скоупом, він запишеться у <code>.mcp.json</code> в корені репозиторію, і цей файл комітиться. А кожен уже сам вмикає його собі через <code>enabledMcpjsonServers</code> у <code>settings.local.json</code> — ми це бачили на слайді про дозволи.</p>
+					<p><strong>Доки фреймворка — це просто посилання текстом.</strong> Їм місце в CLAUDE.md, якщо правило стосується всього проєкту, або в <code>.claude/rules/</code> з прив'язкою до глоба, якщо воно потрібне лише на певних файлах. Наприклад, правило про CSS-доки має сенс вмикати тільки на <code>*.css</code>.</p>
+					<p>Якщо MCP ставити не хочеться — лишається запасний варіант: посилання в CLAUDE.md плюс дозвіл <code>WebFetch(domain:developer.mozilla.org)</code>, щоб агент не питав щоразу.</p>
+					<p><strong>І нюанс, який рятує від тонких помилок:</strong> спершу подивитись версію в <code>package.json</code>, і тільки тоді питати документацію. Інакше агент притягне API з новішої версії, якої у вас немає — і код не збереться. Я це правило прописала окремо.</p>
+					<p><strong>Тепер виняток.</strong> Специфічна логіка й патерни саме вашого проєкту не описані ніде — жодна документація світу про них не знає. Ось тоді приклади справді виправдані. Але їхнє місце — у <code>.claude/rules/</code>, який підтягнеться за потреби, а не в CLAUDE.md, що вантажиться щоразу.</p>
+					<p><strong>Документацію не переказують. На неї посилаються.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Куди мій агент іде по документацію</h2>
+				<div class="auto-cascade">
+					<table class="matrix matrix--mid">
+						<tr>
+							<td><code class="clay">context7</code></td>
+							<td><a class="link" href="https://github.com/upstash/context7" target="_blank" rel="noopener">github.com/upstash/context7</a><br />
+								<span style="color: var(--muted)">актуальні доки будь-якої бібліотеки в сесію ·
+									<code>.mcp.json</code></span></td>
+						</tr>
+						<tr>
+							<td><code class="clay">MDN MCP</code></td>
+							<td><a class="link" href="https://mcp.mdn.mozilla.net/" target="_blank" rel="noopener">mcp.mdn.mozilla.net</a><br />
+								<span style="color: var(--muted)">веб-платформа: DOM, CSS, сумісність браузерів ·
+									<code>.mcp.json</code></span></td>
+						</tr>
+						<tr>
+							<td><code class="clay">any official docs</code></td>
+							<td>фреймворк, SDK, внутрішня платформа<br />
+								<span style="color: var(--muted)">посиланням у <code>CLAUDE.md</code> або
+									<code>rules/</code></span></td>
+						</tr>
+					</table>
+					<p class="note note--lg note--rule">
+						<strong class="note-bright">Варто доповнити:</strong> спершу версія в <code>package.json</code>
+						— і <strong>тільки тоді пошук документації</strong>. Інакше агент притягне API з версії,
+						якої у вас немає.
+					</p>
+				</div>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Коли приклади все-таки потрібні:</p>
+					<ul class="star-list">
+						<li>Патерни <strong>саме вашого</strong> проєкту — їх немає в жодній документації</li>
+						<li>Місце для них — <code>.claude/rules/</code>, а не <code>CLAUDE.md</code></li>
+					</ul>
+				</div>
+			</section>
+
+			<!-- 7 ————————————————————————————————— CLAUDE.md не один + карта файлів -->
+			<section class="slide" data-tree="CLAUDE.local.md|.gitignore|.claude/settings.json|.claude/settings.local.json">
+				<div class="notes">
+					<p>Тепер те, що знімає конфлікт між «файл має бути коротким» і «правил насправді багато».</p>
+					<p><strong>CLAUDE.md не обов'язково один.</strong> Можна покласти окремий у підтеку — і, що найважливіше, <strong>вкладені файли не вантажаться на старті сесії.</strong> Вони підтягуються тільки коли Claude уперше читає файл із цієї підтеки.</p>
+					<p>Тобто правила для фронту не займають контекст, поки ви правите бекенд. Найпомітніше це в монорепо: замість одного файлу на 800 рядків — кілька по сотні, кожен за потреби.</p>
+					<p><strong>Але це не монорепо-фіча</strong> — механіка чисто шляхова, ніякої перевірки «а чи це монорепо» немає. Працює і в звичайному великому проєкті: <code>src/legacy/</code> зі своїми домовленостями, <code>tests/</code> з правилами про фікстури, <code>infra/</code> з термінологією деплою.</p>
+					<p><strong>Критерій не в розмірі репозиторію, а в тому, чи є теки, де правила справді інші. Якщо весь проєкт однорідний — вкладені файли не потрібні, вони лише додадуть плутанини.</strong></p>
+					<p>Є ще <code>.claude/rules/</code> — окремі файли по темах, які можна прив'язати до патернів шляхів, щоб правило вмикалось лише на певних типах файлів.</p>
+					<p>Тепер про налаштування. Файлів більше, ніж здається, і плутанина між ними — джерело половини проблем. Насправді рівнів рівно чотири, і вони вишикувані за пріоритетом.</p>
+					<p><strong>1. user</strong> — у домашній теці, діє на всі ваші проєкти. Ваш особистий шар, який ви носите з собою.</p>
+					<p><strong>2. project</strong> — комітиться в репо. Хто клонує, отримує ті самі правила. Це домовленість команди.</p>
+					<p><strong>3. local</strong> — теж для цього проєкту, але особисто ваш, у gitignore. Команда цього не бачить.</p>
+					<p><strong>4. enterprise</strong> — налаштовує організація. Ви його не створюєте і не перекриєте. Про нього окремо через два слайди.</p>
+					<p>Просте правило для запам'ятовування: <strong>що вужче й ближче до вас — то сильніше. Крім четвертого, який б'є все.</strong></p>
+					<p>Окремо про <strong>локальні файли</strong>, бо в них є психологічний бар'єр: здається, ніби ти щось ховаєш від команди.</p>
+					<p><strong>Логіка зворотна.</strong> Локальний файл існує саме для того, щоб <strong>не тягнути особисте у спільний.</strong> Порушення — це коли людина пише свої нотатки в командний CLAUDE.md і роздуває його для всіх. Пам'ятаєте про 400 рядків? Ось так вони й набираються.</p>
+					<p>Що туди законно кладуть: особливості вашого середовища («Postgres тут на 5433 — 5432 зайнятий іншим проєктом»), ваші робочі звички («спершу показуй план, я не люблю одразу дифи»), тимчасові нотатки по поточній задачі («зараз мігруємо на Zustand — нові стори лише на ньому»), обхідні шляхи, поки щось не полагодили.</p>
+					<p>Критерій один: <strong>новому колезі це потрібно знати? Якщо ні — локальний файл.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Шари конфігурації файлів</h2>
+				<pre class="pre--xs"><code>my-project/
+├── <span class="j-key">.claude/</span>
+├── <span class="j-key">frontend/CLAUDE.md</span>        <span class="j-punc">лише у frontend/</span>
+├── <span class="j-key">tests/CLAUDE.md</span>           <span class="j-punc">лише у tests/</span>
+├── <span class="j-key">CLAUDE.md</span></code></pre>
+				<p class="mini-head mini-head--plain" data-fragment>4 рівні CLAUDE.md / settings.json</p>
+				<div class="diagram diagram--md">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 300" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+						<title>Чотири рівні налаштувань Claude Code за пріоритетом</title>
+						<desc>Знизу вгору за силою: user у домашній теці, project у репо, local у gitignore і enterprise від організації.</desc>
 						<defs>
-							<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-								<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" />
-							</marker>
+						<marker id="ar-lv" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+						<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+						</marker>
 						</defs>
-						<!-- знизу вгору: кожен рівень — окремий фрагмент -->
-						<g data-fragment>
-							<rect x="150" y="300" width="430" height="54" rx="8" fill="none" stroke="var(--line,#2A3230)" />
-							<text x="365" y="322" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-family="'Space Mono', monospace">~/.claude/settings.json</text>
-							<text x="365" y="342" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">глобальний, ваша база</text>
-						</g>
-						<g data-fragment>
-							<rect x="150" y="234" width="430" height="54" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
-							<text x="365" y="256" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-family="'Space Mono', monospace">.claude/settings.json</text>
-							<text x="365" y="276" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">командний, комітиться в репо</text>
-						</g>
-						<g data-fragment>
-							<rect x="150" y="168" width="430" height="54" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
-							<text x="365" y="190" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-family="'Space Mono', monospace">.claude/settings.local.json</text>
-							<text x="365" y="210" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">особистий, у gitignore</text>
-						</g>
-						<g data-fragment>
-							<rect x="150" y="102" width="430" height="54" rx="8" fill="none" stroke="var(--line,#2A3230)" />
-							<text x="365" y="124" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="16" font-weight="500">CLI-прапорці</text>
-							<text x="365" y="144" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">лише поточна сесія</text>
-						</g>
-						<g data-fragment>
-							<rect x="150" y="36" width="430" height="54" rx="8" fill="var(--line,#2A3230)" stroke="var(--muted,#8B9A94)" />
-							<text x="365" y="58" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="16" font-weight="500">Managed settings</text>
-							<text x="365" y="78" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">деплоїть IT, не перекриє ніхто</text>
-						</g>
-						<g data-fragment>
-							<line x1="100" y1="336" x2="100" y2="56" stroke="var(--accent,#6EE7A0)" stroke-width="1.5" marker-end="url(#ar)" />
-							<text x="88" y="200" text-anchor="end" fill="var(--muted,#8B9A94)" font-size="13">пріоритет</text>
-						</g>
-					</svg>
-				</div>
-				<p class="after" data-fragment><strong>Чим специфічніше — тим вище пріоритет.</strong></p>
-			</section>
 
-			<!-- 7 ————————————————————————————————— дозволи зливаються -->
-			<section class="slide">
-				<h2>Дозволи зливаються, а не перекривають</h2>
-				<div class="split split--wide">
-					<div class="diagram diagram--md">
-						<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 300" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
-							<title>Дозволи зливаються, а не перекриваються</title>
-							<desc>Звичайний ключ перекривається вищим рівнем, а правила дозволів складаються з обох рівнів.</desc>
-							<text x="40" y="40" fill="var(--muted,#8B9A94)" font-size="13">Звичайний ключ</text>
-							<rect x="40" y="54" width="250" height="50" rx="8" fill="none" stroke="var(--line,#2A3230)" />
-							<text x="165" y="84" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="14" text-decoration="line-through">глобальне значення</text>
-							<rect x="40" y="118" width="250" height="50" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
-							<text x="165" y="148" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">проєктне значення</text>
-							<text x="165" y="196" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="14" font-weight="500">виграє одне</text>
-							<line x1="340" y1="40" x2="340" y2="230" stroke="var(--line,#2A3230)" stroke-width="1" />
-							<text x="390" y="40" fill="var(--muted,#8B9A94)" font-size="13">Правила дозволів</text>
-							<rect x="390" y="54" width="250" height="50" rx="8" fill="none" stroke="var(--warn,#E8A33D)" />
-							<text x="515" y="84" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">глобальні дозволи</text>
-							<rect x="390" y="118" width="250" height="50" rx="8" fill="none" stroke="var(--warn,#E8A33D)" />
-							<text x="515" y="148" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">проєктні дозволи</text>
-							<text x="515" y="196" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="14" font-weight="500">діють обидва</text>
-							<text x="340" y="250" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">Короткий список у проєктному файлі — це не весь список</text>
+						<g class="lv-arrow">
+						<line x1="34" y1="286" x2="34" y2="18" stroke="var(--claude-clay)" stroke-width="1.8" marker-end="url(#ar-lv)" />
+						<text transform="rotate(-90 16 150)" x="16" y="150" text-anchor="middle" fill="var(--muted)" font-size="12" letter-spacing="0.08em">ПРІОРИТЕТ</text>
+						</g>
+
+						<g data-fragment>
+						<rect x="62" y="228" width="610" height="64" rx="9" fill="none" stroke="var(--sky)" />
+						<circle cx="88" cy="260" r="13" fill="none" stroke="var(--sky)" />
+						<text x="88" y="265" text-anchor="middle" fill="var(--sky)" font-size="13" font-weight="700" font-family="'Space Mono', monospace">1</text>
+						<text x="114" y="255" fill="var(--sky)" font-size="14" font-weight="700" font-family="'Space Mono', monospace">user</text>
+						<text x="114" y="275" fill="var(--muted)" font-size="11.5">тільки ви · усі проєкти</text>
+						<g font-family="'Space Mono', monospace" font-size="12.5" fill="var(--fg)">
+						<text x="340" y="253">~/.claude/CLAUDE.md</text>
+						<text x="340" y="275">~/.claude/settings.json</text>
+						</g>
+						</g>
+
+						<g data-fragment>
+						<rect x="62" y="154" width="610" height="64" rx="9" fill="none" stroke="var(--accent)" />
+						<circle cx="88" cy="186" r="13" fill="none" stroke="var(--accent)" />
+						<text x="88" y="191" text-anchor="middle" fill="var(--accent)" font-size="13" font-weight="700" font-family="'Space Mono', monospace">2</text>
+						<text x="114" y="181" fill="var(--accent)" font-size="14" font-weight="700" font-family="'Space Mono', monospace">project</text>
+						<text x="114" y="201" fill="var(--muted)" font-size="11.5">команда · комітиться</text>
+						<g font-family="'Space Mono', monospace" font-size="12.5" fill="var(--fg)">
+						<text x="340" y="172">CLAUDE.md</text>
+						<text x="340" y="191">.claude/rules/*.md</text>
+						<text x="340" y="210">.claude/settings.json</text>
+						</g>
+						</g>
+
+						<g data-fragment>
+						<rect x="62" y="80" width="610" height="64" rx="9" fill="none" stroke="var(--claude-clay)" />
+						<circle cx="88" cy="112" r="13" fill="none" stroke="var(--claude-clay)" />
+						<text x="88" y="117" text-anchor="middle" fill="var(--claude-clay)" font-size="13" font-weight="700" font-family="'Space Mono', monospace">3</text>
+						<text x="114" y="107" fill="var(--claude-clay)" font-size="14" font-weight="700" font-family="'Space Mono', monospace">local</text>
+						<text x="114" y="127" fill="var(--muted)" font-size="11.5">тільки ви · цей проєкт</text>
+						<g font-family="'Space Mono', monospace" font-size="12.5" fill="var(--fg)">
+						<text x="340" y="105">CLAUDE.local.md</text>
+						<text x="340" y="127">.claude/settings.local.json</text>
+						</g>
+						</g>
+
+						<g data-fragment>
+						<rect x="62" y="6" width="610" height="64" rx="9" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="10 7" />
+						<circle cx="88" cy="38" r="13" fill="none" stroke="var(--muted)" />
+						<text x="88" y="43" text-anchor="middle" fill="var(--muted)" font-size="13" font-weight="700" font-family="'Space Mono', monospace">4</text>
+						<text x="114" y="33" fill="var(--muted)" font-size="14" font-weight="700" font-family="'Space Mono', monospace">enterprise</text>
+						<text x="114" y="53" fill="var(--muted)" font-size="11.5">налаштовує організація</text>
+						<g font-family="'Space Mono', monospace" font-size="12.5" fill="var(--fg)">
+						<text x="340" y="37">managed-settings.json</text>
+						</g>
+						<text x="340" y="57" fill="var(--muted)" font-size="11.5">не перекриє ніхто</text>
+						</g>
 						</svg>
-					</div>
-					<figure class="shot" data-fragment>
-						<div class="shot-ph">
-							assets/screenshots/<br />global-permissions.png<br /><br />мій глобальний
-							settings.json
-						</div>
-						<figcaption>Клік — на весь екран</figcaption>
-					</figure>
 				</div>
-				<p class="after" data-fragment>
-					Додається все, що ви колись дозволили глобально — включно з тими «дозволити і більше не
-					питати» піврічної давнини.
-				</p>
 			</section>
 
-			<!-- 8a ———————————————————————————————— тихе перекривання -->
-			<section class="slide">
-				<p class="tag">кейс цього тижня</p>
-				<h2>Тихе перекривання</h2>
-				<p class="lede">
-					Проєктна <code>/review</code> закомічена й коректна — а запускався інший скіл.
-					<strong>Команда не була зламана. Вона просто ніколи не викликалась.</strong>
-				</p>
+			<!-- 8 ———————————————————————————————— фейл: скіл з'їв команду -->
+			<section class="slide" data-tree=".claude/commands/review.md" data-tree-mint=".claude/commands|.claude/commands/review.md">
+				<div class="notes">
+					<p>І тепер історія, яка сталась зі мною цього тижня — саме про команди.</p>
+					<p>У нас у репо є <code>/review</code> — чек-ліст перед PR. Файл на місці, закомічений, опис коректний. Але при наборі <code>/review</code> <strong>запускалось зовсім інше.</strong> Скіл із зовнішнього пакету, який робив якесь двовісне ревʼю через субагентів.</p>
+					<p>Зверніть увагу на характер збою: проєктна команда була <strong>не зламана</strong>. Вона просто <strong>ніколи не викликалась.</strong> Без жодного попередження.</p>
+					<p><strong>Що виявилось.</strong> Моя гіпотеза була «виграє проєктне, бо конкретніше». Логічно звучить — і неправильно. Насправді тут спрацювали <strong>два задокументовані правила, і обидва проти мене:</strong></p>
+					<p><strong>Перше: особистий рівень перекриває проєктний.</strong> Не навпаки. Скіл із <code>~/.claude/skills/</code> сильніший за той самий у репо. Для налаштувань ми щойно бачили зворотну логіку — там що ближче до проєкту, то сильніше. А для скілів навпаки, і це легко переплутати.</p>
+					<p><strong>Друге: якщо скіл і команда називаються однаково, виграє скіл.</strong> Тобто мій <code>.claude/commands/review.md</code> програвав двічі.</p>
+					<p>Звідки той скіл узявся: одна встановча дія у червні принесла двадцять сім скілів із чужого пакету. Той, що переміг, у джерелі лежить у теці <code>in-progress</code> — автор сам вважає його недоробленим.</p>
+					<p><strong>Як я це з'ясувала.</strong> Тут важливий порядок, бо він неочевидний. <strong>Симптом видно одразу: набрала <code>/review</code> — запустилось не те.</strong> І на цьому все, більше жодної підказки. Ніхто не пише «ваша команда затінена», нічого не падає.</p>
+					<p>Питання, яке з цього випливає: <strong>а хто ще претендує на це імʼя?</strong> Відповідає <code>/skills</code> — список усіх доступних скілів, можна фільтрувати за іменем. Набираєш <code>review</code> і бачиш, що на нього претендує ще хтось, і звідки він. Там же <code>t</code> сортує за токенами, тому одразу видно, скільки контексту з'їдають ті двадцять сім.</p>
+					<p>А потім я вже з Claude розібрала, з якого саме пакета цей скіл приїхав і чому.</p>
+					<p class="cue">[Не плутати з <code>/doctor</code> — він про інше: показує, чим <em>ви</em> не користуєтесь і скільки це коштує. Про колегу в тому ж репо він нічого не знає. Це інструмент прибирання, і про нього — на наступному слайді.]</p>
+					<p><strong>Тепер що це означає практично.</strong> Обидва правила задокументовані, тут немає таємниці. Проблема в іншому: <strong>вони дивляться в протилежний бік від того, до чого ви звикли в налаштуваннях.</strong> Там що ближче до проєкту, то сильніше: user, потім project, потім local. А в скілах навпаки — user перекриває project.</p>
+					<p>Два правила, які суперечать одне одному за напрямком, — це рівно те, що забувається першим. Ви памʼятаєте логіку налаштувань, застосовуєте її до скілів і помиляєтесь.</p>
+					<p><strong>Звідси висновок, який не залежить від того, хто саме виграє: колізію імен треба усувати, а не вигравати.</strong> Префікс проєкту — <code>/mcs:review</code> — знімає питання пріоритету взагалі. Немає двох претендентів на одне слово — немає й проблеми.</p>
+					<p>І окремо: <strong>логіка «конкретніше = сильніше» тут не працює. Ловить не міркування, а тридцятисекундний експеримент у терміналі.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Як глобальний скіл з'їв проєктну команду</h2>
 				<div class="diagram diagram--md">
-					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 330" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
-						<title>Колізія імені між слеш-командою і скілом</title>
-						<desc>Проєктна команда review затінена глобальним скілом review.</desc>
-						<g text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">
-							<text x="240" y="40">Команди</text>
-							<text x="510" y="40">Скіли</text>
-						</g>
-						<g text-anchor="end" fill="var(--muted,#8B9A94)" font-size="13">
-							<text x="110" y="106">проєкт</text>
-							<text x="110" y="212">глобально</text>
-						</g>
-						<rect x="140" y="70" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)" />
-						<text x="240" y="98" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13" font-family="'Space Mono', monospace">.claude/commands/</text>
-						<text x="240" y="120" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">затінена, не викликається</text>
-						<rect x="410" y="70" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)" stroke-dasharray="4 4" />
-						<text x="510" y="108" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">порожньо</text>
-						<rect x="140" y="176" width="200" height="66" rx="8" fill="none" stroke="var(--line,#2A3230)" stroke-dasharray="4 4" />
-						<text x="240" y="214" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">порожньо</text>
-						<rect x="410" y="176" width="200" height="66" rx="8" fill="none" stroke="var(--warn,#E8A33D)" stroke-width="1.5" />
-						<text x="510" y="204" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="13" font-family="'Space Mono', monospace">~/.claude/skills/</text>
-						<text x="510" y="226" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="13" font-weight="500">виграє виклик</text>
-						<text x="340" y="282" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="13">Всередині колонки виграє верхній рядок</text>
-						<text x="340" y="304" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="13">Між колонками пріоритет не визначений</text>
-					</svg>
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 236" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+						<title>Хто відгукується на імʼя review</title>
+						<desc>На одне імʼя претендують проєктна команда і глобальний скіл. Виграє скіл, бо особистий рівень сильніший за проєктний, а скіл сильніший за команду.</desc>
+						<defs>
+						<marker id="ar-clash" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+						<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" />
+						</marker>
+						</defs>
+
+						<text x="340" y="44" text-anchor="middle" fill="var(--muted)" font-size="18" font-family="'Space Mono', monospace">project command <tspan font-weight="700">/review</tspan></text>
+
+						<line x1="230" y1="62" x2="150" y2="112" stroke="var(--bad)" stroke-width="1.8" marker-end="url(#ar-clash)" />
+						<line x1="450" y1="62" x2="530" y2="112" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#ar-clash)" />
+
+						<rect x="8" y="120" width="300" height="104" rx="10" fill="none" stroke="var(--bad)" />
+						<text x="28" y="149" fill="var(--fg)" font-size="15.5" font-family="'Space Mono', monospace">.claude/commands/review.md</text>
+						<text x="28" y="173" fill="var(--muted)" font-size="14">project level — більш специфічний</text>
+						<text x="28" y="203" fill="var(--bad)" font-size="17" font-weight="600">✕&#160;&#160;мовчки не виконувалась</text>
+
+						<rect x="372" y="120" width="300" height="104" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.8" />
+						<text x="392" y="149" fill="var(--fg)" font-size="15.5" font-family="'Space Mono', monospace">~/.claude/skills/review/</text>
+						<text x="392" y="173" fill="var(--muted)" font-size="14">user level — менш специфічний</text>
+						<text x="392" y="203" fill="var(--accent)" font-size="17" font-weight="700">✓&#160;&#160;запускалась</text>
+
+						</svg>
 				</div>
-				<p class="after" data-fragment>
-					<strong>Програв артефакт, який бачить уся команда і який під контролем версій.</strong>
-					<span style="color: var(--muted)">Виграв той, якого немає в жодного колеги.</span>
-				</p>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Симптом видно одразу, причину — ні:</p>
+					<ul class="star-list">
+						<li><code class="clay">/skills</code> — покаже, <strong>хто ще претендує на це імʼя</strong>
+							і кількість токенів</li>
+					</ul>
+					<pre class="pre--xs"><code><span class="j-str">✔ on</span>    <span class="j-key">review</span>  <span class="j-punc">·</span>  project  <span class="j-punc">·</span>  ~30 tok
+<span class="j-str">✔ on</span>    <span class="j-key">review</span>  <span class="j-punc">·</span>  user     <span class="j-punc">·</span>  ~140 tok</code></pre>
+					<ul class="star-list">
+						<li><code class="clay">/doctor</code> — покаже, якими скілами й MCP <strong>ви не
+							користуєтесь</strong><br />і скільки контексту вони їдять</li>
+					</ul>
+				</div>
 			</section>
 
-			<!-- 8b ———————————————————————————————— що з цим робити -->
-			<section class="slide">
+			<!-- 9 ———————————————————————————————— що з цим робити -->
+			<section class="slide" data-tree-late=".claude/commands/mcs/review.md" data-tree-drop=".claude/commands/review.md" data-tree-mint=".claude/commands|.claude/commands/mcs|.claude/commands/mcs/review.md">
+				<div class="notes">
+					<p>Чотири поради.</p>
+					<p><strong>Префікс проєкту.</strong> Не називайте команди загальними словами. Підтека дає префікс автоматично.</p>
+					<p><strong>Не тримайте підключеними скіли, якими не користуєтесь.</strong></p>
+					<p><strong>Аудит при встановленні.</strong> Двадцять сім скілів — це двадцять сім зайнятих слів. І беруть їх усі з одного колодязя: <code>review</code>, <code>test</code>, <code>deploy</code>, <code>commit</code>.</p>
+					<p>І окремо тим, хто, як я, любить ставити собі скіли, щоб потестувати. Це нормально — але так ви створюєте <strong>особистий шар, про який не знає жоден колега.</strong> Тому зробіть ритуалом: <strong>заходячи на проєкт із налаштованим середовищем, спершу подивіться, що є у вас глобально.</strong> Проєктний конфіг ви прочитаєте так чи інакше, а свій накопичений шар — ні, він давно став фоном.</p>
+					<p><strong>Проєкт ви успадковуєте, а глобальний шар приносите з собою.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
 				<h2>Що з цим робити</h2>
-				<div class="split">
-					<div>
-						<ul>
-							<li data-fragment>
-								<strong>Префікс проєкту.</strong> Підтека дає його автоматично:
-								<code>.claude/commands/wv/review.md</code> → <code>/wv:review</code>
-							</li>
-							<li data-fragment>
-								<strong>Не тримайте підключеними глобальні скіли,</strong> якими не користуєтесь
-							</li>
-							<li data-fragment>
-								<strong>Аудит при встановленні.</strong> 27 скілів — це 27 зайнятих слів, і всі
-								з одного колодязя: <code>review</code>, <code>test</code>, <code>deploy</code>
-							</li>
-						</ul>
-						<p class="after" data-fragment>
-							Гіпотеза «конкретніше = сильніше» була неправильна.
-							<strong>Зловив її не аналіз, а тридцятисекундний експеримент:</strong> набрала
-							<code>/review</code> і подивилась, що завантажилось.
-						</p>
-					</div>
-					<figure class="shot" data-fragment>
-						<div class="shot-ph">
-							assets/screenshots/<br />review-collision.png<br /><br />що прийшло в контекст на
-							<br />/review
-						</div>
-						<figcaption>Клік — на весь екран</figcaption>
-					</figure>
-				</div>
-				<p class="note" data-fragment>
-					Проєкт ви успадковуєте, а глобальний шар приносите з собою. Відповідальність за колізію — на
-					тому, хто приніс.
-				</p>
-			</section>
-
-			<!-- 9 ———————————————————————————————— правило ≠ гарантія -->
-			<section class="slide">
-				<h2>Правило ≠ гарантія</h2>
-				<p class="lede">
-					Файли CLAUDE.md <strong>не перекривають один одного, а конкатенуються.</strong> Якщо два
-					правила суперечать — модель може обрати одне з них довільно. Це не конфіг, це текст без
-					гарантії виконання.
-				</p>
-				<div data-fragment>
+				<div class="auto-cascade">
+					<p class="mini-head mini-head--plain">4 рівні skills</p>
 					<div class="diagram diagram--sm">
-						<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 260" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
-							<title>PreToolUse і PostToolUse у циклі виклику інструменту</title>
-							<desc>PreToolUse спрацьовує до виклику і може заблокувати, PostToolUse після і може лише відреагувати.</desc>
-							<defs>
-								<marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-									<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" />
-								</marker>
-							</defs>
-							<rect x="40" y="70" width="150" height="60" rx="8" fill="none" stroke="var(--warn,#E8A33D)" />
-							<text x="115" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-family="'Space Mono', monospace">PreToolUse</text>
-							<text x="115" y="115" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="13">може заблокувати</text>
-							<line x1="196" y1="100" x2="258" y2="100" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar2)" />
-							<rect x="265" y="70" width="150" height="60" rx="8" fill="var(--line,#2A3230)" stroke="var(--muted,#8B9A94)" />
-							<text x="340" y="105" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Write / Edit</text>
-							<line x1="421" y1="100" x2="483" y2="100" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar2)" />
-							<rect x="490" y="70" width="150" height="60" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
-							<text x="565" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14" font-family="'Space Mono', monospace">PostToolUse</text>
-							<text x="565" y="115" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="13">форматує, лінтить</text>
-							<text x="340" y="180" text-anchor="middle" fill="var(--muted,#8B9A94)" font-size="14">Виконуються завжди, незалежно від того, що вирішила модель</text>
-							<text x="340" y="210" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Треба порадити — CLAUDE.md. Треба гарантувати — хук.</text>
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 220" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+						<title>Чотири рівні скілів за пріоритетом</title>
+						<desc>Знизу вгору за силою: project, user, enterprise. Plugin стоїть окремо — має власний неймспейс і не конфліктує.</desc>
+						<defs>
+						<marker id="ar-sk" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+						<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+						</marker>
+						</defs>
+
+						<line x1="34" y1="140" x2="34" y2="12" stroke="var(--claude-clay)" stroke-width="1.8" marker-end="url(#ar-sk)" />
+						<text transform="rotate(-90 16 76)" x="16" y="76" text-anchor="middle" fill="var(--muted)" font-size="12" letter-spacing="0.08em">ПРІОРИТЕТ</text>
+
+						<rect x="62" y="6" width="610" height="42" rx="8" fill="none" stroke="var(--muted)" />
+						<text x="88" y="33" fill="var(--muted)" font-size="15" font-weight="700" font-family="'Space Mono', monospace">enterprise</text>
+						<text x="250" y="33" fill="var(--muted)" font-size="14">managed settings — усі в організації</text>
+
+						<rect x="62" y="54" width="610" height="42" rx="8" fill="none" stroke="var(--sky)" />
+						<text x="88" y="81" fill="var(--sky)" font-size="15" font-weight="700" font-family="'Space Mono', monospace">user</text>
+						<text x="250" y="81" fill="var(--fg)" font-size="14" font-family="'Space Mono', monospace">~/.claude/skills/</text>
+						<text x="430" y="81" fill="var(--muted)" font-size="14">усі ваші проєкти</text>
+
+						<rect x="62" y="102" width="610" height="42" rx="8" fill="none" stroke="var(--accent)" />
+						<text x="88" y="129" fill="var(--accent)" font-size="15" font-weight="700" font-family="'Space Mono', monospace">project</text>
+						<text x="250" y="129" fill="var(--fg)" font-size="14" font-family="'Space Mono', monospace">.claude/skills/</text>
+						<text x="430" y="129" fill="var(--muted)" font-size="14">лише цей проєкт</text>
+
+						<rect x="62" y="164" width="610" height="42" rx="8" fill="none" stroke="var(--muted)" stroke-width="1" stroke-dasharray="10 7" />
+						<text x="88" y="191" fill="var(--muted)" font-size="15" font-weight="700" font-family="'Space Mono', monospace">plugin</text>
+						<text x="250" y="191" fill="var(--fg)" font-size="14" font-family="'Space Mono', monospace">plugin:skill</text>
+						<text x="430" y="191" fill="var(--accent)" font-size="14">не конфліктує — має префікс</text>
 						</svg>
 					</div>
 				</div>
-				<pre data-fragment><code><span class="j-punc">{</span> <span class="j-key">"matcher"</span><span class="j-punc">:</span> <span class="j-str">"Write|Edit"</span><span class="j-punc">,</span>
-  <span class="j-key">"command"</span><span class="j-punc">:</span> <span class="j-str">"jq -r '.tool_input.file_path'</span>
-             <span class="j-str">| xargs -r npx prettier --tab-width=4 --write"</span> <span class="j-punc">}</span></code></pre>
+				<div class="frag-cascade" data-fragment>
+					<p class="note note--20 note--tight">
+						<strong>Якщо сетап проєкту командний, варто передбачити колізію імен та усувати:</strong>
+					</p>
+					<ul class="star-list list--spaced">
+						<li>Префікс проєкту: <code>.claude/commands/mcs/review.md</code> → <code class="clay">/mcs:review</code></li>
+						<li>Не тримати підключеними скіли, якими не користуєтесь</li>
+						<li>На новому проєкті — спершу перевірити <strong>свій user level</strong></li>
+					</ul>
+					<p class="quote quote--sm quote--dim">Проєкт успадковується, а глобальний шар інженер приносить з собою.</p>
+				</div>
 			</section>
 
-			<!-- 10 ———————————————————————————————— CLAUDE.md vs skills -->
-			<section class="slide">
-				<h2>CLAUDE.md чи скіл</h2>
-				<div class="cols">
+			<!-- 10 ———————————————————————————————— кастомні команди -->
+			<section class="slide" data-tree=".claude/commands/mcs/commit.md|.claude/commands/mcs/prepare-pr.md|.claude/commands/mcs/release.md|.claude/commands/mcs/docs-review.md" data-tree-mint=".claude/commands|.claude/commands/mcs|.claude/commands/mcs/commit.md|.claude/commands/mcs/prepare-pr.md|.claude/commands/mcs/release.md|.claude/commands/mcs/docs-review.md">
+				<div class="notes">
+					<p>Наступний шар — свої команди. Це прості markdown-файли в <code>.claude/commands/</code>, але вони перетворюють «поясни агенту, що зробити» на одне слово.</p>
+					<p>Ключове, що я в них закладаю — <strong>вбудовані перевірки</strong>. Не просто «зроби коміт», а «спершу прогони лінт і тести, подивись на diff, і лише тоді». Один раз описали процедуру — далі вона виконується однаково щоразу.</p>
+					<p class="cue">[Показати одну реальну команду з репо, не переказувати всі чотири.]</p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Кастомні команди <span class="h2-path">/commands</span></h2>
+				<p class="lede">Часто повторювані промти та рутину переношу в стабільні команди, правила та скіли.</p>
+				<pre class="pre--fit"><code><span class="j-str">/mcs:commit</span>        <span class="j-punc">перевірка + осмислене повідомлення</span>
+<span class="j-str">/mcs:prepare-pr</span>    <span class="j-punc">лінт, білд, тести, звірка з docs</span>
+<span class="j-str">/mcs:release</span>       <span class="j-punc">чейнджлог, версія, теги</span>
+<span class="j-str">/mcs:docs-review</span>   <span class="j-punc">чи не розійшлась документація з кодом</span></code></pre>
+			</section>
+
+			<!-- 11 ———————————————————————————————— settings.json: дозволи -->
+			<section class="slide" data-tree=".claude/settings.json|.claude/settings.local.json" data-tree-fold=".claude/commands">
+				<div class="notes">
+					<p>Дозволи — те, що економить найбільше нервів у щоденній роботі.</p>
+					<p><strong><code>allow</code></strong> — виконувати без питань. Рутина: тести, лінт, білд, <code>git diff</code>. Те, що ви й так завжди підтверджуєте.</p>
+					<p><strong><code>ask</code></strong> — питати щоразу. Те, що має наслідки за межами вашої машини.</p>
+					<p><strong><code>deny</code></strong> — не можна ніколи.</p>
+					<p>Сенс не в тому, щоб усе заборонити. Сенс — <strong>прибрати з дороги десятки підтверджень, які ви натискаєте не дивлячись.</strong> Бо саме через цю звичку одного разу ви підтвердите те, що не варто було.</p>
+					<p><strong>Праворуч — локальний файл, той, що в <code>.gitignore</code>.</strong> Найчастіший його сценарій — <strong>ваші MCP-дозволи</strong>. MCP-сервери підключаються по-різному в кожного, і тягнути це в командний файл немає сенсу.</p>
+					<p>Найочевидніший приклад — <strong>монорепо</strong>. Я працюю з Figma MCP щодня, бо роблю UI: мені потрібні <code>WebFetch</code> на домен Figma й дозвіл на виклик інструментів сервера. <strong>А бекендеру в тому самому репозиторії Figma MCP не потрібен зовсім</strong> — навіщо йому цей дозвіл і зайвий сервер у контексті?</p>
+					<p>Те саме з <code>enabledMcpjsonServers</code>: <strong>кожен вмикає собі ті сервери, якими реально користується.</strong> Хтось тримає підключеним figma-desktop, хтось — клієнта до бази, хтось нічого.</p>
+					<p>Сюди ж ідуть дозволи під ваше середовище: <code>docker compose</code>, локальні скрипти, порти. Те, що працює у вас і не обов'язково однаково у решти команди.</p>
+					<p>Правило те саме, що й для <code>CLAUDE.local.md</code>: <strong>потрібно це новому колезі? Якщо ні — локальний файл.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2><code style="font-size: 1em">settings.json</code> — дозволи</h2>
+				<div class="code-pair">
 					<div>
-						<h3>CLAUDE.md</h3>
-						<ul>
-							<li>Те, що має бути в голові агента <strong>завжди</strong></li>
-							<li>Стек, конвенції, стиль, чого не робити ніколи</li>
-							<li>Вантажиться щоразу — кожен зайвий рядок коштує контексту</li>
-						</ul>
+						<p class="code-label">.claude/settings.json</p>
+						<pre><code><span class="j-key">"allow"</span><span class="j-punc">: [</span>
+  <span class="j-str">"Bash(npm run test:*)"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(npm run lint)"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(git diff:*)"</span>
+<span class="j-punc">],</span>
+<span class="j-key">"ask"</span><span class="j-punc">: [</span><span class="j-str">"Bash(git push:*)"</span><span class="j-punc">],</span>
+<span class="j-key">"deny"</span><span class="j-punc">: [</span>
+  <span class="j-str">"Bash(rm -rf:*)"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(git reset --hard:*)"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(psql:*production*)"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(curl:* | sh)"</span>
+<span class="j-punc">]</span></code></pre>
 					</div>
-					<div>
-						<h3>Скіл</h3>
-						<ul>
-							<li>Процедура, потрібна <strong>зрідка</strong>, але однаково</li>
-							<li>Підтягується, коли потрібен</li>
-							<li>Решту часу не займає місце</li>
-						</ul>
+					<div class="auto-in">
+						<p class="code-label code-label--local">.claude/settings.local.json <span class="code-label-note">.gitignore</span></p>
+						<pre><code><span class="j-key">"allow"</span><span class="j-punc">: [</span>
+  <span class="j-str">"WebFetch(domain:figma.com)"</span><span class="j-punc">,</span>
+  <span class="j-str">"mcp__figma__get_design"</span><span class="j-punc">,</span>
+  <span class="j-str">"Bash(docker compose up:*)"</span>
+<span class="j-punc">],</span>
+<span class="j-key">"enabledMcpjsonServers"</span><span class="j-punc">: [</span>
+  <span class="j-str">"figma-desktop"</span>
+<span class="j-punc">]</span></code></pre>
 					</div>
 				</div>
-				<p class="after" data-fragment>
-					<strong>«Коли робиш X, зроби так-то» — це скіл. «У цьому проєкті ми завжди так» — це
-						CLAUDE.md.</strong>
-				</p>
-			</section>
-
-			<!-- 11 ———————————————————————————————— кейс png → webp -->
-			<section class="slide">
-				<h2>Кейс: png → webp</h2>
-				<div class="diagram diagram--md">
-					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 280" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
-						<title>Конвертація зображень до і після скіла</title>
-						<desc>До: агент щоразу вгадує інструмент і потрапляє в цикл помилок. Після: один скрипт, один шлях.</desc>
-						<text x="40" y="40" fill="var(--muted,#8B9A94)" font-size="13">Було</text>
-						<rect x="40" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--line,#2A3230)" />
-						<g font-size="13" fill="var(--muted,#8B9A94)" font-family="'Space Mono', monospace">
-							<text x="60" y="82">sips → фейл</text>
-							<text x="60" y="106">npx sharp-cli → мережа</text>
-							<text x="60" y="130">підбір прапорців</text>
-							<text x="60" y="154">спроба знову</text>
-						</g>
-						<text x="60" y="184" fill="var(--warn,#E8A33D)" font-size="13" font-weight="500">~5 зайвих викликів щосесії</text>
-						<text x="370" y="40" fill="var(--muted,#8B9A94)" font-size="13">Стало</text>
-						<rect x="370" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
-						<text x="390" y="100" fill="var(--fg,#E8EDEA)" font-size="13" font-family="'Space Mono', monospace">npm run img:webp</text>
-						<text x="390" y="128" fill="var(--muted,#8B9A94)" font-size="13">sharp, уже в проєкті</text>
-						<text x="390" y="152" fill="var(--muted,#8B9A94)" font-size="13">нічого з мережі</text>
-						<text x="390" y="184" fill="var(--accent,#6EE7A0)" font-size="13" font-weight="500">один шлях, вдвічі швидше</text>
-						<text x="340" y="240" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">Те, що агент з'ясовує щосесії заново, вигідно зафіксувати один раз</text>
-					</svg>
+				<div class="modes with-pair">
+					<span class="mode mode--accept"><span class="mode-sym">⏵⏵</span>accept edits on</span>
+					<span class="mode mode--auto"><span class="mode-sym">⏵⏵</span>auto mode on</span>
 				</div>
+				<p class="after with-pair">
+					<strong>MCP-дозволи — майже завжди локальні.</strong>
+					<span style="color: var(--muted)">У монорепо фронту потрібен Figma MCP, бекенду — ні. Кожен вмикає
+						собі те, чим реально користується.</span>
+				</p>
+				<p class="note note--20 note--plain with-pair"><span class="mint">deny</span> перекриває
+					<span class="mint">allow</span> з будь-якого рівня</p>
+				<p class="note note--lg with-pair">
+					<strong class="note-bright">Сенс не в тому, щоб усе заборонити.</strong> Сенс — прибрати з дороги
+					десятки підтверджень, які ви тиснете не дивлячись. Бо саме через цю звичку одного разу підтвердите
+					те, що не варто було.
+				</p>
+			</section>
+
+			<!-- 12 ———————————————————————————————— правило ≠ гарантія -->
+			<section class="slide" data-tree="" data-tree-hl="CLAUDE.md|.claude/settings.json">
+				<div class="notes">
+					<p>Найважливіше в цьому блоці — різниця, яку я усвідомила лише на іспиті.</p>
+					<p>Було питання: у проєктному CLAUDE.md написано «4 пробіли», а в архітектора в особистому — «2 пробіли». Код приходить у двох і ламає білд. Що робити?</p>
+					<p>Напрошується: «нічого, проєктний рівень конкретніший, він переможе». <strong>Це неправильно.</strong></p>
+					<p>У документації прямо сказано: файли CLAUDE.md <strong>не перекривають один одного, а конкатенуються.</strong> І далі: <strong>якщо два правила суперечать, модель може обрати одне з них довільно.</strong></p>
+					<p>Тобто CLAUDE.md — <strong>це не конфіг. Це текст, який приходить моделі, без гарантії виконання.</strong></p>
+					<p>Звідси три рівні. <strong>Порада</strong> — CLAUDE.md, модель може послухатись. <strong>Дозвіл</strong> — settings.json, інструмент просто не викличеться. <strong>Гарантія</strong> — хук, виконається завжди.</p>
+					<p><strong>І практичний наслідок конкатенації, який б'є саме в монорепо.</strong> Claude іде вгору по дереву тек і забирає всі CLAUDE.md, які знайде. Тобто у ваш контекст потрапляють інструкції команд, до яких ви не маєте стосунку — і ви за них платите токенами щозапиту.</p>
+					<p>Рятує <code>claudeMdExcludes</code> — список глобів, які треба пропустити. Кладеться <strong>в будь-який файл налаштувань</strong>: user, project, local або managed. Масиви з різних рівнів <strong>складаються</strong>, як і дозволи.</p>
+					<p>На практиці зручніше в <code>settings.local.json</code> — бо «які саме чужі теки мені заважають» це ваша особиста справа, а не домовленість команди.</p>
+					<p>Одне обмеження: <strong>managed policy CLAUDE.md виключити не можна.</strong> Те, що поклала організація, лишається завжди.</p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Правило ≠ гарантія</h2>
+				<div class="auto-cascade">
+					<table class="matrix">
+						<tr>
+							<th></th>
+							<th>Куди</th>
+							<th>Що дає</th>
+						</tr>
+						<tr>
+							<td>Порада</td>
+							<td><code class="clay">CLAUDE.md</code></td>
+							<td>модель <strong>може</strong> послухатись</td>
+						</tr>
+						<tr>
+							<td>Дозвіл</td>
+							<td><code class="clay">settings.json</code></td>
+							<td>інструмент не викличеться</td>
+						</tr>
+						<tr>
+							<td>Гарантія</td>
+							<td><code class="clay">hooks</code></td>
+							<td>виконається завжди</td>
+						</tr>
+					</table>
+					<p class="note note--lg">
+						<code class="clay">CLAUDE.md</code> конкатенуються — при суперечності модель обирає довільно
+					</p>
+				</div>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Коли в контекст лізе зайве:</p>
+					<pre class="pre--xs"><code><span class="j-punc">{</span> <span class="j-key">"claudeMdExcludes"</span><span class="j-punc">: [</span><span class="j-str">"**/packages/billing/**"</span><span class="j-punc">,</span> <span class="j-str">"**/packages/analytics/**"</span><span class="j-punc">] }</span></code></pre>
+					<p class="note note--lg">
+						Я роблю фронт, а в контекст щозапиту приїжджають правила білінгу й аналітики.
+						Виключається в будь-якому файлі налаштувань — зручніше в <code class="clay">settings.local.json</code>.
+					</p>
+				</div>
+			</section>
+
+			<!-- 13 ———————————————————————————————— хуки: два типи -->
+			<section class="slide" data-tree=".claude/hooks">
+				<div class="notes">
+					<p>Хуки — шелл-команди, які Claude Code виконує у фіксованих точках свого циклу. Ключове: <strong>вони виконуються завжди, незалежно від того, що вирішила модель.</strong> Це вже не інструкція, це механіка.</p>
+					<p><strong><code>PreToolUse</code></strong> спрацьовує <strong>до</strong> виклику. Єдина точка, де дію можна <strong>заблокувати</strong>: хук виходить із кодом 2 — і виклик не відбувається.</p>
+					<p><strong><code>PostToolUse</code></strong> спрацьовує <strong>після</strong>. Скасувати нічого не може, зате може відреагувати: відформатувати, прогнати лінт, залогувати.</p>
+					<p><strong>І тепер обмеження, про яке варто сказати чесно.</strong> Хук виконується <strong>в сесії тієї людини, у чиїх налаштуваннях він стоїть.</strong> Він не бачить чужі PR, чужі коміти й чужі сесії. Якщо колега прибрав хук зі свого локального файлу або запустив Claude із <code>--dangerously-skip-permissions</code> — ви про це не дізнаєтесь.</p>
+					<p><strong>Хук ловить агента, а не людину.</strong> Це не механізм контролю над командою — це страховка для того, хто його собі поставив. Він рятує від власної неуважності о пів на восьму вечора, а не від чужого наміру.</p>
+					<p>Питання, яке напрошується: чи можна повісити Pre-хук у CI? <strong>Ні — і не через обмеження реалізації.</strong> Pre і Post це події життєвого циклу Claude Code. Немає агента — немає подій. У CI працює git, а не агент.</p>
+					<p>Звідси проста конструкція для команди: <strong>хук контролює агента, CI контролює код.</strong> Перше робить правильну поведінку зручнішою, друге робить неправильну неможливою.</p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Хуки — вже не інструкція, а механіка</h2>
+				<p class="lede subhead">Шелл-команди у фіксованих точках циклу. <strong>Виконуються завжди</strong>,
+					незалежно від того, що вирішила модель.</p>
+				<div class="diagram diagram--sm">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 200" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+						<title>PreToolUse і PostToolUse у циклі виклику інструменту</title>
+						<desc>PreToolUse спрацьовує до виклику і може заблокувати, PostToolUse після і може лише відреагувати.</desc>
+						<defs>
+						<marker id="ar-t2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+						<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" />
+						</marker>
+						</defs>
+						<rect x="40" y="60" width="150" height="60" rx="8" fill="none" stroke="var(--warn,#E8A33D)" />
+						<text x="115" y="84" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="17" font-weight="700" font-family="'Space Mono', monospace">PreToolUse</text>
+						<text x="115" y="106" text-anchor="middle" fill="var(--warn,#E8A33D)" font-size="13">ДО · може заблокувати</text>
+						<line x1="196" y1="90" x2="258" y2="90" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar-t2)" />
+						<rect x="265" y="60" width="150" height="60" rx="8" fill="var(--line,#2A3230)" stroke="var(--muted,#8B9A94)" />
+						<text x="340" y="95" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Write / Edit / Bash</text>
+						<line x1="421" y1="90" x2="483" y2="90" stroke="var(--muted,#8B9A94)" stroke-width="1.5" marker-end="url(#ar-t2)" />
+						<rect x="490" y="60" width="150" height="60" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
+						<text x="565" y="84" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="17" font-weight="700" font-family="'Space Mono', monospace">PostToolUse</text>
+						<text x="565" y="106" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="13">ПІСЛЯ · реагує</text>
+						<text x="340" y="172" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15">Треба порадити — <tspan font-family="'Space Mono', monospace">CLAUDE.md</tspan>. Треба гарантувати — хук.</text>
+						</svg>
+				</div>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Але хук має межу:</p>
+					<ul class="star-list list--spaced">
+						<li><strong>Хук контролює агента, а не людину.</strong> Він виконується у вашій сесії —
+							і не бачить чужі PR, коміти й сесії</li>
+						<li>Колега прибрав хук зі свого локального файлу — ви про це не дізнаєтесь</li>
+					</ul>
+					<p class="quote quote--sm quote--dim">Хук контролює агента. CI контролює код.</p>
+				</div>
+			</section>
+
+			<!-- 14 ———————————————————————————————— підсумок частини I -->
+			<section class="slide" data-tree="" data-tree-hl="CLAUDE.md|.claude/settings.json">
+				<div class="notes">
+					<p>Підсумуємо, що ми поклали в репо — бо файлів вийшло чимало, і легко загубитись.</p>
+					<p><strong>Командне</strong>, те що комітиться: <code>CLAUDE.md</code> з правилами проєкту, <code>.claude/rules/</code> для тем із прив'язкою до шляхів, <code>.claude/settings.json</code> з дозволами й хуками, <code>.claude/commands/</code> з префіксом, і <code>.mcp.json</code>, якщо команді потрібні спільні MCP-сервери.</p>
+					<p><strong>Особисте</strong>, те що в gitignore: <code>CLAUDE.local.md</code> і <code>.claude/settings.local.json</code> — ваше середовище, ваші MCP-дозволи, ваші звички.</p>
+					<p><strong>І окремо — ваш глобальний шар</strong> у домашній теці. Той, якого не бачить жоден колега і про який легко забути. Саме він з'їв мою проєктну команду.</p>
+					<p><strong>Тепер про плагін, який варто спробувати.</strong> <code>claude-code-setup</code> — офіційний плагін Anthropic, на сторінці стоїть позначка Anthropic Verified. Він сканує кодову базу і пропонує, які автоматизації вам підійдуть: MCP-сервери, скіли, хуки, субагенти, свої команди. По одній-дві найдоречніші в кожній категорії. На момент підготовки — близько 195 тисяч встановлень.</p>
+					<p>Ставиться або кнопкою «Install in Claude Code» просто зі сторінки, або командою <code>/plugin install</code>.</p>
+					<p>Ключове, що знімає страх: <strong>він read-only.</strong> Аналізує, але нічого не змінює. Тобто поставити й подивитись — безпечно.</p>
+					<p>Ставити раджу <strong>на рівні user</strong>, а не в проєкт: це інструмент для вас, а не домовленість команди. Один раз поставили — і він доступний у всіх репозиторіях.</p>
+					<p>Викликається просто розмовою: «recommend automations for this project» або «help me set up Claude Code».</p>
+					<p class="cue">[Якщо є час — показати вивід на реальному репо.]</p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">I</span></span> <span class="part-dash">—</span> Нюанси сетапу проєкту</p>
+				<h2>Що лишається в репо</h2>
+				<div class="auto-cascade">
+					<table class="matrix matrix--mid">
+						<tr>
+							<td>Командне<br /><span class="cell-note">комітиться</span></td>
+							<td><code class="clay">CLAUDE.md</code> · <code class="clay">.claude/rules/</code><br />
+								<code class="clay">.claude/settings.json</code> ·
+								<code class="clay">.claude/commands/</code> · <code class="clay">.mcp.json</code></td>
+						</tr>
+						<tr>
+							<td>Особисте<br /><span class="cell-note">у gitignore</span></td>
+							<td><code class="clay">CLAUDE.local.md</code> ·
+								<code class="clay">.claude/settings.local.json</code></td>
+						</tr>
+						<tr>
+							<td>Ваш шар<br /><span class="cell-note">усі проєкти</span></td>
+							<td><code class="clay">~/.claude/</code> — те, чого не бачить жоден колега</td>
+						</tr>
+					</table>
+				</div>
+				<div class="frag-cascade" data-fragment>
+					<p class="mini-head">Не знаєте, з чого почати — спитайте Claude:</p>
+					<pre class="pre--xs"><code><span class="j-str">/plugin install</span> claude-code-setup@claude-plugins-official</code></pre>
+					<p class="note note--lg">
+						Офіційний плагін Anthropic. Сканує репо й радить, що вам підійде: MCP, скіли, хуки, субагенти,
+						команди. <strong>Read-only</strong> — аналізує, нічого не змінює. Ставте на рівні
+						<code>user</code>: <a class="link" href="https://claude.com/plugins/claude-code-setup" target="_blank" rel="noopener">claude.com/plugins/claude-code-setup</a>
+					</p>
+				</div>
+			</section>
+
+			<!-- 15 ———————————————————————————————— частина II: фіча + планування -->
+			<section class="slide slide--notree">
+				<div class="notes">
+					<p>Репо налаштовано. Тепер — як я працюю над самою фічею.</p>
+					<p>Найбільше відкриття з курсів: <strong>планування задачі й виконання варто розділяти на різні сесії.</strong></p>
+					<p>Звучить дивно, поки не зрозумієш механіку. Коли ви годину обговорювали план, сесія забита обговоренням, варіантами, відкинутими ідеями. І в цьому шумі агент починає писати код. <strong>Виконавцю не потрібна історія того, як ви до плану дійшли. Йому потрібен план.</strong></p>
+					<p><strong>Plan mode</strong> — агент спершу викладає, що збирається робити, і не чіпає код.</p>
+					<p><strong>Скіли на кшталт <code>grill me</code></strong> — агент допитує вас питаннями, поки будує план. Некомфортно, але спливає те, про що ви самі не подумали.</p>
+				</div>
+				<div class="part-heading">
+					<p class="tag">частина <span class="roman">II</span></p>
+					<span class="part-dash">—</span>
+					<h2>Робота над фічею</h2>
+				</div>
+				<p class="lede subhead">Планування й виконання варто <strong>розділяти на різні сесії</strong>.</p>
+				<table class="matrix matrix--mid">
+					<tr>
+						<td>Сесія 1 — <span class="clay">план</span></td>
+						<td>plan mode, <code>grill me</code>, багато питань</td>
+					</tr>
+					<tr>
+						<td>Сесія 2 — <span class="clay">код</span></td>
+						<td>чистий контекст, готовий план на вході</td>
+					</tr>
+				</table>
 				<p class="after" data-fragment>
-					Скіл із <strong>явною забороною</strong> <code>sips</code> і <code>npx sharp-cli</code>.
-					Зник не лише час — зник цикл проб і помилок.
+					<strong>Виконавцю не потрібна історія того, як ви до плану дійшли. Йому потрібен план.</strong>
+					<span style="color: var(--muted)">Після години обговорення сесія забита варіантами й відкинутими
+						ідеями — і в цьому шумі агент починає писати код.</span>
 				</p>
 			</section>
 
-			<!-- 12 ———————————————————————————————— метод -->
-			<section class="slide">
-				<p class="tag">це не лайфхак</p>
-				<h2>Метод</h2>
-				<blockquote class="quote">
-					Якщо є повторюваний рутинний процес — не покладайтесь на удачу.
-					<cite>Claude щоразу підбирає інструменти по-новому: або успіх, або цикл помилок</cite>
-				</blockquote>
-				<ul style="margin-top: 1.5rem">
-					<li data-fragment>Після сесії подивіться, що з'їло найбільше часу. Не після кожної — регулярно</li>
-					<li data-fragment>Закріпіть це: скриптом, скілом або правилом</li>
-					<li data-fragment>Рісерчити з AI варто, а рішення приймати самостійно</li>
-				</ul>
-			</section>
-
-			<!-- 13 ———————————————————————————————— планування ≠ виконання -->
-			<section class="slide">
-				<h2>Планування ≠ виконання</h2>
-				<p class="lede">
-					Коли ви годину обговорювали план, сесія вже забита варіантами й відкинутими ідеями — і в
-					цьому шумі агент починає писати код.
-					<strong>Виконавцю потрібен план, а не історія того, як ви до нього дійшли.</strong>
-				</p>
+			<!-- 16 ———————————————————————————————— два шляхи одночасно -->
+			<section class="slide slide--notree">
+				<div class="notes">
+					<p>І техніка для випадку, коли ви вагаєтесь між двома підходами.</p>
+					<p>Замість того щоб реалізувати перший, розчаруватись і переробляти — можна <strong>дослідити обидва паралельно.</strong> Субагенти працюють у власних контекстних вікнах і повертають підсумок.</p>
+					<p>Тут є деталь, яка вирішує все. Звичайний субагент стартує <strong>з чистого аркуша</strong> — ви маєте описати йому задачу заново. А якщо в описі скіла вказати <strong><code>context: fork</code></strong>, він <strong>успадкує вашу поточну розмову</strong> і піде досліджувати альтернативу з усім уже накопиченим контекстом. Для «а що, якби ми зробили інакше» це саме те.</p>
+					<p>Важливе обмеження: <strong>паралельність безпечна для читання</strong> — рісерч, аналіз, розвідка по кодовій базі. Якщо агенти пишуть у файли, доступ серіалізується. Тобто це інструмент для <strong>порівняння підходів</strong>, а не для того, щоб дві гілки одночасно писали код.</p>
+					<p>І практична порада: <strong>просіть про це явно.</strong> За замовчуванням Claude консервативний і паралелить неохоче — «дослідь ці два варіанти паралельними субагентами» працює краще, ніж сподівання.</p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">II</span></span> <span class="part-dash">—</span> Робота над фічею</p>
+				<h2>Два шляхи одночасно</h2>
+				<pre><code><span class="j-punc">---</span>
+<span class="j-key">name</span><span class="j-punc">:</span> <span class="j-str">alternative-explorer</span>
+<span class="j-key">description</span><span class="j-punc">:</span> <span class="j-str">Explore an alternative implementation path</span>
+<span class="j-key">context</span><span class="j-punc">:</span> <span class="j-str">fork</span>
+<span class="j-key">tools</span><span class="j-punc">:</span> <span class="j-str">Read, Grep, Glob</span>
+<span class="j-punc">---</span></code></pre>
 				<ul>
-					<li data-fragment><strong>Plan mode</strong> — спершу викладає, що збирається робити</li>
-					<li data-fragment><strong>Скіли на кшталт <code>grill me</code></strong> — допитують вас, поки будують план</li>
-					<li data-fragment>
-						<strong>Поле вводу лишається активним.</strong> Enter — «прочитай, коли закінчиш».
-						Esc — «стоп, зміна планів»
-					</li>
+					<li data-fragment><code class="clay">fork</code> успадковує контекст батька — звичайний субагент стартує чистим</li>
+					<li data-fragment>Паралельність безпечна для <strong>читання</strong>; запис серіалізується</li>
+					<li data-fragment>Просіть про це <strong>явно</strong> — за замовчуванням Claude паралелить неохоче</li>
 				</ul>
-				<p class="note" data-fragment>Поведінка може відрізнятись між терміналом, IDE і десктопом — перевірте у себе.</p>
 			</section>
 
-			<!-- 14 ———————————————————————————————— handoff -->
-			<section class="slide">
-				<h2><code style="font-size: 1em">/handoff</code> — передача естафети</h2>
-				<div class="diagram diagram--md">
-					<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 240" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+			<!-- 17 ———————————————————————————————— контроль контексту -->
+			<section class="slide slide--notree">
+				<div class="notes">
+					<p>Набір, який варто довести до автоматизму.</p>
+					<p><strong><code>Esc</code></strong> — перервати й перенаправити.</p>
+					<p><strong>Подвійний <code>Esc</code></strong> — відмотати розмову до попереднього повідомлення. Цінне тим, що <strong>прибирає нерелевантний контекст, зберігаючи корисний.</strong> Не все скидати, а відкотитись до розвилки.</p>
+					<p><strong><code>#</code></strong> — записати спостереження в CLAUDE.md прямо з сесії. Найкраще працює на повторюваній помилці: агент удруге наступає на ті самі граблі — фіксуєте одразу, а не «потім допишу».</p>
+					<p><strong><code>/compact</code></strong> — стиснути розмову й продовжити. <strong><code>/clear</code></strong> — скинути повністю, коли переходите до іншої задачі.</p>
+					<p>І дрібниця, якої багато хто не знає: <strong>поки агент працює, поле вводу активне.</strong> Пишете, тиснете Enter — це <strong>не перебʼє</strong> його роботу, повідомлення стане в чергу. <strong>Enter — «прочитай, коли закінчиш». Esc — «стоп».</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">II</span></span> <span class="part-dash">—</span> Робота над фічею</p>
+				<h2>Контроль контексту</h2>
+				<table class="matrix">
+					<tr>
+						<td><code class="clay">Esc</code></td>
+						<td>перервати й перенаправити</td>
+					</tr>
+					<tr>
+						<td><code class="clay">Esc Esc</code></td>
+						<td>відмотати розмову назад, зберігши корисне</td>
+					</tr>
+					<tr>
+						<td><code class="clay">#</code></td>
+						<td>записати спостереження в CLAUDE.md прямо з сесії</td>
+					</tr>
+					<tr>
+						<td><code class="clay">/compact</code></td>
+						<td>стиснути й продовжити</td>
+					</tr>
+					<tr>
+						<td><code class="clay">/clear</code></td>
+						<td>скинути повністю — коли міняєте задачу</td>
+					</tr>
+				</table>
+				<p class="after" data-fragment>
+					<strong>Enter під час роботи — черга, а не переривання.</strong>
+					<span style="color: var(--muted)">Enter — «прочитай, коли закінчиш». Esc — «стоп».</span>
+				</p>
+			</section>
+
+			<!-- 18 ———————————————————————————————— handoff -->
+			<section class="slide slide--notree">
+				<div class="notes">
+					<p>Коли <code>/compact</code> уже не рятує — контекст забитий, працювати повільно й дорого, а робота триває.</p>
+					<p><code>/handoff</code> стискає розмову в короткий документ: що зроблено, де зупинились, які рішення прийняті, що далі, які скіли викликати наступній сесії. Не дублює те, що вже є в комітах і файлах — посилається на них.</p>
+					<p>Далі відкриваєте нову сесію: «прочитай handoff і продовжуй». Стартує легкою, але знає все важливе.</p>
+					<p><strong>Відмінність від автостискання: ви самі вирішуєте, що передати далі.</strong></p>
+				</div>
+				<p class="part-crumb"><span class="part-label">частина <span class="roman">II</span></span> <span class="part-dash">—</span> Робота над фічею</p>
+				<h2><code style="font-size: 1em">/handoff</code> — коли <code style="font-size: 1em">/compact</code> уже не рятує</h2>
+				<div class="diagram diagram--sm">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 240" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
 						<title>Передача контексту між сесіями через handoff</title>
 						<desc>Повна сесія стискається в короткий документ, нова сесія стартує легкою.</desc>
 						<defs>
-							<marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-								<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" />
-							</marker>
+						<marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+						<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" />
+						</marker>
 						</defs>
 						<rect x="40" y="60" width="170" height="80" rx="8" fill="var(--line,#2A3230)" stroke="var(--muted,#8B9A94)" />
 						<text x="125" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Сесія 1</text>
@@ -1337,30 +2570,100 @@
 						<text x="575" y="94" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="15" font-weight="500">Сесія 2</text>
 						<text x="575" y="116" text-anchor="middle" fill="var(--accent,#6EE7A0)" font-size="13">легка, але в курсі</text>
 						<text x="340" y="190" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">Ви самі вирішуєте, що передати далі — на відміну від автостискання</text>
-					</svg>
+						</svg>
 				</div>
+				<p class="lede" data-fragment>Стискає розмову в короткий документ: що зроблено, де зупинились, які рішення
+					прийняті, що далі. Не дублює коміти й файли — посилається на них.</p>
 				<p class="after" data-fragment>
-					Не дублює того, що вже є в комітах і файлах — лише посилається. Чутливе редагує.
+					<strong>Відмінність від автостискання: ви самі вирішуєте, що передати далі.</strong>
 				</p>
 			</section>
 
-			<!-- 15 ———————————————————————————————— гігієна і висновки -->
-			<section class="slide">
-				<h2>Гігієна і висновки</h2>
-				<blockquote class="quote">
-					Конфіг — це не пам'ятник. Це витратний матеріал.
-					<cite>Андрій Карпаті радить раз на пів року видаляти CLAUDE.md і рутинні скіли повністю</cite>
-				</blockquote>
-				<ul style="margin-top: 1.5rem">
-					<li data-fragment><strong>Щоденне використання ≠ розуміння</strong></li>
-					<li data-fragment><strong>Не покладайтесь на удачу в рутині.</strong> Що повторюється — закріплюйте</li>
-					<li data-fragment><strong>Регулярно чистіть те, що закріпили.</strong> Інакше воно почне працювати проти вас</li>
-				</ul>
-				<p class="after" data-fragment style="font-size: 1.5rem; font-weight: 600">Дякую. Питання?</p>
+			<!-- 19 ———————————————————————————————— роздільник: UI -->
+			<section class="slide slide--divider" data-tree="">
+				<div class="notes">
+					<p>Останній блок — UI. Я багато працюю через Figma MCP: з макета одразу в код. <strong>Сьогодні я в це не вникаю — воно тягне на окремий воркшоп.</strong> Але один сюжет звідти показати варто, бо він не про Figma, а про метод.</p>
+				</div>
+				<p class="tag">частина III</p>
+				<h2>UI</h2>
+				<p class="lede">від макета до коду — і метод, який з цього виріс</p>
+			</section>
+
+			<!-- 20 ———————————————————————————————— Figma MCP і метод -->
+			<section class="slide" data-tree=".claude/skills/img-webp/SKILL.md">
+				<div class="notes">
+					<p>Останній блок — UI. Я багато працюю через Figma MCP: з макета одразу в код. Скажу чесно — <strong>сьогодні я в це не вникаю, воно тягне на окремий воркшоп.</strong> Але один сюжет звідти показати варто, бо він не про Figma, а про метод.</p>
+					<p>Витягуючи зображення з макета, я щоразу натикалась на одне й те саме. Claude <strong>вгадував інструмент заново в кожній сесії</strong>: одного разу вбудований <code>sips</code>, іншого — тягнув <code>npx sharp-cli</code> з мережі. Спроба, помилка, підбір прапорців. В одній сесії я нарахувала близько п'яти зайвих викликів.</p>
+					<p>Я не стала пояснювати це промптом щоразу. Написала скрипт на базі <code>sharp</code>, який <strong>уже стоїть у проєкті</strong> — його використовує Next.js. Загорнула в npm-скрипт і задокументувала у скілі, з явною забороною тягнути щось із мережі.</p>
+					<p>Вдвічі швидше — але важливіше інше: <strong>зник цикл проб і помилок.</strong></p>
+					<p>І ось метод, який я з цього забрала і застосовую до всього:</p>
+					<p class="cue"><strong>Якщо процес повторюється — не покладайтесь на удачу.</strong> Після сесії подивіться, що з'їло найбільше часу, і закріпіть це скриптом, скілом або правилом.</p>
+					<p>Усе, що агент з'ясовує щосесії заново — вигідно один раз зафіксувати.</p>
+					<p class="cue">[Тут можна показати один кадр результату Figma → код і сказати: якщо цікаво, зроблю про це окремий воркшоп.]</p>
+				</div>
+				<h2>Той самий метод</h2>
+				<p class="lede">Claude вгадував інструмент заново в кожній сесії: то <code>sips</code>, то <code>npx sharp-cli</code>
+					з мережі. Близько <strong>п'яти зайвих викликів</strong> на сесію.</p>
+				<div class="diagram diagram--sm">
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 0 680 280" width="100%" role="img" font-family="Manrope, system-ui, sans-serif">
+						<title>Конвертація зображень до і після скіла</title>
+						<desc>До: агент щоразу вгадує інструмент і потрапляє в цикл помилок. Після: один скрипт, один шлях.</desc>
+						<text x="40" y="40" fill="var(--muted,#8B9A94)" font-size="13">Було</text>
+						<rect x="40" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--line,#2A3230)" />
+						<g font-size="13" fill="var(--muted,#8B9A94)" font-family="'Space Mono', monospace">
+						<text x="60" y="82">sips → фейл</text>
+						<text x="60" y="106">npx sharp-cli → мережа</text>
+						<text x="60" y="130">підбір прапорців</text>
+						<text x="60" y="154">спроба знову</text>
+						</g>
+						<text x="60" y="184" fill="var(--warn,#E8A33D)" font-size="13" font-weight="500">~5 зайвих викликів щосесії</text>
+						<text x="370" y="40" fill="var(--muted,#8B9A94)" font-size="13">Стало</text>
+						<rect x="370" y="54" width="270" height="150" rx="8" fill="none" stroke="var(--accent,#6EE7A0)" />
+						<text x="390" y="100" fill="var(--fg,#E8EDEA)" font-size="13" font-family="'Space Mono', monospace">npm run img:webp</text>
+						<text x="390" y="128" fill="var(--muted,#8B9A94)" font-size="13">sharp, уже в проєкті</text>
+						<text x="390" y="152" fill="var(--muted,#8B9A94)" font-size="13">нічого з мережі</text>
+						<text x="390" y="184" fill="var(--accent,#6EE7A0)" font-size="13" font-weight="500">один шлях, вдвічі швидше</text>
+						<text x="340" y="240" text-anchor="middle" fill="var(--fg,#E8EDEA)" font-size="14">Те, що агент з'ясовує щосесії заново, вигідно зафіксувати один раз</text>
+						</svg>
+				</div>
+				<p class="quote" data-fragment>
+					Якщо процес повторюється — не покладайтесь на удачу. Після сесії подивіться, що з'їло найбільше часу,
+					і закріпіть це скриптом, скілом або правилом.
+				</p>
+			</section>
+
+			<!-- 21 ———————————————————————————————— корисні посилання -->
+			<section class="slide" data-tree="">
+				<div class="notes">
+					<p>Наостанок — те, що можна забрати з собою й підключити сьогодні ж.</p>
+					<p><strong>context7</strong> — той самий MCP, про який я говорила. Ставиться однією командою: <code>claude mcp add</code>. На сайті є дашборд і ключ, якщо потрібні вищі ліміти, але для базового використання ключ не обовʼязковий.</p>
+					<p><strong>MDN MCP</strong> — офіційний сервер від Mozilla. Нічого встановлювати не треба, він хоститься в них: <code>claude mcp add --transport http mdn https://mcp.mdn.mozilla.net/</code>. Дає доки й дані про сумісність браузерів.</p>
+					<p><strong>Документація Claude Code</strong> — там усе, про що ми сьогодні говорили: memory, settings, hooks, MCP. Якщо щось із деки захочете перевірити або поглибити — починайте звідти.</p>
+					<p class="cue">[Скинути ці посилання в чат після воркшопу.]</p>
+				</div>
+				<h2>Забрати з собою</h2>
+				<table class="matrix">
+					<tr>
+						<td><code class="clay">context7</code></td>
+						<td><a class="link" href="https://github.com/upstash/context7" target="_blank" rel="noopener">github.com/upstash/context7</a><br />
+							<span style="color: var(--muted)">актуальні доки бібліотек · <code>claude mcp add</code></span></td>
+					</tr>
+					<tr>
+						<td><code class="clay">MDN MCP</code></td>
+						<td><a class="link" href="https://mcp.mdn.mozilla.net/" target="_blank" rel="noopener">mcp.mdn.mozilla.net</a><br />
+							<span style="color: var(--muted)">DOM, CSS, сумісність браузерів · <code>claude mcp add --transport http</code></span></td>
+					</tr>
+					<tr>
+						<td><code class="clay">docs</code></td>
+						<td><a class="link" href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a><br />
+							<span style="color: var(--muted)">memory, settings, hooks, MCP — усе, що було в деці</span></td>
+					</tr>
+				</table>
 			</section>
 
 			<!-- ————————————————————————————————————— резервні -->
 
+			<!-- Р1 ———————————————————————————————— ціни й умови -->
 			<section class="slide" data-backup="Р1">
 				<p class="tag">резервний</p>
 				<h2>Ціни й умови</h2>
@@ -1377,6 +2680,7 @@
 				</p>
 			</section>
 
+			<!-- Р2 ———————————————————————————————— де ще використовую Claude -->
 			<section class="slide" data-backup="Р2">
 				<p class="tag">резервний</p>
 				<h2>Де ще використовую Claude</h2>
@@ -1389,6 +2693,7 @@
 				</ul>
 			</section>
 
+			<!-- Р3 ———————————————————————————————— hub-and-spoke -->
 			<section class="slide" data-backup="Р3">
 				<p class="tag">резервний</p>
 				<h2>Hub-and-spoke</h2>
@@ -1402,6 +2707,7 @@
 				</ul>
 			</section>
 
+			<!-- Р4 ———————————————————————————————— статус-лайн -->
 			<section class="slide" data-backup="Р4">
 				<p class="tag">резервний</p>
 				<h2>Статус-лайн</h2>
@@ -1417,6 +2723,7 @@
 				</div>
 			</section>
 
+			<!-- Р5 ———————————————————————————————— writing-fragments -->
 			<section class="slide" data-backup="Р5">
 				<p class="tag">резервний</p>
 				<h2><code style="font-size: 1em">writing-fragments</code></h2>
@@ -1431,12 +2738,14 @@
 				</ul>
 			</section>
 
+			<!-- Р6 ———————————————————————————————— наступний воркшоп? -->
 			<section class="slide" data-backup="Р6">
 				<p class="tag">резервний</p>
 				<h2>Наступний воркшоп?</h2>
 				<p class="lede">Figma MCP → код. Уже є напрацювання і слайди.</p>
 			</section>
 
+			<!-- Р7 ———————————————————————————————— Building with the Claude API -->
 			<section class="slide" data-backup="Р7">
 				<p class="tag">резервний</p>
 				<h2>Building with the Claude API</h2>
@@ -1449,6 +2758,7 @@
 				<p class="after">Радше ознайомчий курс, ніж робочий інструмент.</p>
 			</section>
 
+			<!-- Р8 ———————————————————————————————— побічна знахідка -->
 			<section class="slide" data-backup="Р8">
 				<p class="tag">резервний</p>
 				<h2>Побічна знахідка</h2>
@@ -1476,6 +2786,17 @@
 			<div class="ov-grid" id="ovBackup"></div>
 		</div>
 
+		<aside class="tree" id="tree" aria-hidden="true"></aside>
+
+		<button class="notes-btn" id="notesBtn" type="button" aria-controls="notesPanel" aria-expanded="false">
+			нотатки
+		</button>
+
+		<aside class="notes-panel" id="notesPanel" aria-live="polite">
+			<h3 id="notesTitle">нотатки спікера</h3>
+			<div class="notes-body" id="notesBody"></div>
+		</aside>
+
 		<div class="lightbox" id="lightbox">
 			<img id="lightboxImg" alt="" />
 			<div class="lightbox-hint">Esc або клік — закрити</div>
@@ -1492,6 +2813,12 @@
 				overview: document.getElementById('overview'),
 				lightbox: document.getElementById('lightbox'),
 				lightboxImg: document.getElementById('lightboxImg'),
+				deck: document.getElementById('deck'),
+				tree: document.getElementById('tree'),
+				notesBtn: document.getElementById('notesBtn'),
+				notesPanel: document.getElementById('notesPanel'),
+				notesTitle: document.getElementById('notesTitle'),
+				notesBody: document.getElementById('notesBody'),
 			}
 
 			let current = 0 // індекс у slides, не у flow
@@ -1532,6 +2859,11 @@
 					const target = backup ? `#/r${backup.replace(/\D/g, '')}` : `#/${pos + 1}`
 					if (location.hash !== target) history.replaceState(null, '', target)
 				}
+
+				syncTree()
+
+				// шухляда відкрита — переливаємо в неї нотатки нового слайда
+				if (isOpen(els.notesPanel)) syncNotes()
 			}
 
 			/* ——— навігація ——— */
@@ -1547,6 +2879,7 @@
 				if (shown < frags.length) {
 					shown++
 					paintFragments()
+					syncTree()
 					return
 				}
 				// з резервного слайда стрілка вперед не веде нікуди
@@ -1559,6 +2892,7 @@
 				if (shown > 0) {
 					shown--
 					paintFragments()
+					syncTree()
 					return
 				}
 				if (slides[current].hasAttribute('data-backup')) return
@@ -1643,6 +2977,152 @@
 
 			/* ——— події ——— */
 
+			/* ——— живе дерево проєкту ———
+			   Кожен слайд може оголосити, які файли з'явились (data-tree)
+			   і які варто підсвітити повторно (data-tree-hl). Дерево
+			   накопичується в порядку потоку слайдів. */
+
+			const TREE_ROOT = 'my-claude-setup/'
+
+			const paths = a => (a || '').split('|').map(x => x.trim()).filter(Boolean)
+
+			function treeStateFor(idx) {
+				// slide--notree — слайд свідомо без дерева, хоч воно вже й накопичилось
+				if (slides[idx].classList.contains('slide--notree')) return null
+				const upto = flow.slice(0, flow.indexOf(slides[idx]) + 1)
+				if (!upto.length || !flow.some(s => s.hasAttribute('data-tree'))) return null
+
+				// data-tree додає файли одразу, data-tree-late — разом із першим
+				// фрагментом слайда, data-tree-drop прибирає старий шлях.
+				// На поточному слайді late і drop спрацьовують одночасно:
+				// старий файл іде, новий приходить — видно сам момент перейменування.
+				const all = []
+				// data-tree-fold згортає теку: сама тека лишається, вміст ховається.
+				// Накопичується, як і решта — згорнули раз, і далі вона згорнута.
+				const fold = []
+				upto.forEach(s => {
+					const deferred = s === slides[idx] && shown === 0
+					const add = paths(s.getAttribute('data-tree'))
+					if (!deferred) add.push(...paths(s.getAttribute('data-tree-late')))
+					add.forEach(p => {
+						if (!all.includes(p)) all.push(p)
+					})
+					paths(s.getAttribute('data-tree-fold')).forEach(p => {
+						const clean = p.replace(/\/$/, '')
+						if (!fold.includes(clean)) fold.push(clean)
+					})
+					if (deferred) return
+					paths(s.getAttribute('data-tree-drop')).forEach(p => {
+						const i = all.indexOf(p)
+						if (i > -1) all.splice(i, 1)
+					})
+				})
+				if (!all.length) return null
+
+				const cur = slides[idx]
+				const late = shown > 0 ? paths(cur.getAttribute('data-tree-late')) : []
+				return {
+					all,
+					fold,
+					fresh: paths(cur.getAttribute('data-tree')).concat(late),
+					hl: paths(cur.getAttribute('data-tree-hl')),
+					// шляхи, які на цьому слайді треба виділити акцентним зеленим
+					mint: paths(cur.getAttribute('data-tree-mint')).map(p => p.replace(/\/$/, '')),
+				}
+			}
+
+			// { name, children: Map, isFile }
+			function buildNodes(all) {
+				const root = new Map()
+				all.forEach(p => {
+					// шлях, що завершується на "/" — тека, оголошена заздалегідь, поки без вмісту
+					const isDirEntry = p.endsWith('/')
+					const clean = isDirEntry ? p.slice(0, -1) : p
+					let level = root
+					const parts = clean.split('/')
+					parts.forEach((part, i) => {
+						const isLast = i === parts.length - 1
+						const isFile = isLast ? !isDirEntry : false
+						if (!level.has(part)) level.set(part, { name: part, isFile, children: new Map(), path: parts.slice(0, i + 1).join('/') })
+						else if (isLast && isDirEntry) level.get(part).isFile = false
+						level = level.get(part).children
+					})
+				})
+				return root
+			}
+
+			// теки вище файлів, усередині — за алфавітом (як у редакторі)
+			function sorted(level) {
+				return [...level.values()].sort((a, b) => {
+					const ad = a.children.size > 0 || a.isFile === false
+					const bd = b.children.size > 0 || b.isFile === false
+					if (ad !== bd) return ad ? -1 : 1
+					return a.name.localeCompare(b.name, 'en')
+				})
+			}
+
+			function renderTree(state) {
+				if (!state) return ''
+				const rows = []
+
+				const walk = (level, prefix) => {
+					const items = sorted(level)
+					items.forEach((node, i) => {
+						const last = i === items.length - 1
+						const branch = last ? '└─ ' : '├─ '
+						const isDir = node.children.size > 0 || node.isFile === false
+						const cls = ['tree-row']
+						if (state.mint.includes(node.path)) cls.push('is-mint')
+						else if (state.fresh.includes(node.path)) cls.push('is-new')
+						else if (state.hl.includes(node.path)) cls.push('is-hl')
+						rows.push(
+							`<span class="${cls.join(' ')}" data-name="${node.name}" style="animation-delay:${rows.length * 45}ms">` +
+								`<span class="tree-pipe">${prefix}${branch}</span>` +
+								`<span class="${isDir ? 'tree-dir' : 'tree-file'}">${node.name}${isDir ? '/' : ''}</span>` +
+							'</span>'
+						)
+						const folded = state.fold && state.fold.includes(node.path)
+						if (isDir && !folded) walk(node.children, prefix + (last ? '   ' : '│  '))
+					})
+				}
+
+				walk(buildNodes(state.all), '')
+				return `<div class="tree-root">${TREE_ROOT}</div>` + rows.join('')
+			}
+
+			function syncTree() {
+				const state = treeStateFor(current)
+				els.deck.classList.toggle('has-tree', !!state)
+				els.tree.classList.toggle('is-on', !!state)
+				els.tree.innerHTML = renderTree(state)
+			}
+
+			/* ——— нотатки спікера ——— */
+
+			function syncNotes() {
+				const src = slides[current].querySelector('.notes')
+				const backup = slides[current].getAttribute('data-backup')
+				els.notesTitle.textContent = backup
+					? `нотатки · резервний ${backup}`
+					: `нотатки · слайд ${flow.indexOf(slides[current]) + 1}`
+				els.notesBody.innerHTML = src
+					? src.innerHTML
+					: '<p class="notes-empty">Для цього слайда нотаток немає.</p>'
+			}
+
+			function toggleNotes(force) {
+				const open = force === undefined ? !isOpen(els.notesPanel) : force
+				els.notesPanel.classList.toggle('is-open', open)
+				els.notesBtn.classList.toggle('is-on', open)
+				els.notesBtn.setAttribute('aria-expanded', String(open))
+				if (open) {
+					syncNotes()
+					els.notesPanel.scrollTop = 0
+				}
+			}
+
+			els.notesBtn.onclick = () => toggleNotes()
+
 			document.addEventListener('keydown', e => {
 				// затемнення перехоплює будь-яку клавішу
 				if (isOpen(els.blackout)) {
@@ -1654,6 +3134,7 @@
 				if (e.key === 'Escape') {
 					if (isOpen(els.lightbox)) return closeLightbox()
 					if (isOpen(els.overview)) return toggleOverview(false)
+					if (isOpen(els.notesPanel)) return toggleNotes(false)
 					return
 				}
 
@@ -1686,6 +3167,9 @@
 						} else if (e.key === 'o' || e.key === 'O' || e.key === 'щ' || e.key === 'Щ') {
 							e.preventDefault()
 							toggleOverview()
+						} else if (e.key === 'n' || e.key === 'N' || e.key === 'т' || e.key === 'Т') {
+							e.preventDefault()
+							toggleNotes()
 						}
 				}
 			})
