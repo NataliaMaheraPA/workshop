@@ -93,6 +93,8 @@ Driven by attributes on `<section class="slide">`:
 - `data-tree-drop="a"` — remove a path from the tree (the file was renamed)
 - `data-tree-fold="a"` — collapse a folder: it stays, its contents hide.
   Accumulates — folded once, folded on every later slide
+- `data-tree-unfold="a"` — cancel that collapse for this slide onwards: the
+  slide that is actually about the folder opens it again
 - `data-tree-mint="a|b"` — highlight what the slide is talking about right now
 - `data-tree-hl="a|b"` — highlight an already present file in cream
 - a path ending in `/` (`.claude/rules/`) — an empty folder
