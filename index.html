@@ -1140,10 +1140,17 @@
 
 			/* та сама плашка, але в заголовку — за кеглем самого заголовка */
 			.tool--title {
+				display: inline-block;
 				font-size: 0.88em;
 				padding: 0.3em 0.7em;
-				gap: 0.4em;
-				vertical-align: 0.06em;
+				/* inline-block бере базову лінію від власного тексту, тож плашка
+				   стоїть на одному рядку з рештою заголовка */
+				vertical-align: baseline;
+			}
+
+			.tool--title svg {
+				vertical-align: -0.16em;
+				margin-right: 0.4em;
 			}
 
 			.tool--claude {
