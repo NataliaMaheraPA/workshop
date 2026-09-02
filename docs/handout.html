@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<title>Claude Code: від інтуїції до системи — посилання й команди</title>
+<style>
+	/* поля аркуша нульові — інакше Chrome лишає їх білими; відступи всередині */
+	@page { size: A4; margin: 0; }
+
+	:root {
+		--bg: #1a1c1e;
+		--ink: #ffffff;
+		--muted: rgba(255, 255, 255, 0.6);
+		--line: rgba(255, 255, 255, 0.14);
+		--clay: #d97757;
+		--accent: #01dd9a;
+		--sky: #9dd4f0;
+		--code-bg: #232629;
+	}
+
+	/* друк за замовчуванням викидає тло — для темної теми його треба лишити */
+	html {
+		background: var(--bg);
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	* { box-sizing: border-box; }
+
+	body {
+		margin: 0;
+		padding: 7mm 12mm 5mm;
+		background: var(--bg);
+		font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+		font-size: 9.9pt;
+		line-height: 1.4;
+		color: var(--ink);
+	}
+
+	code, .mono {
+		font-family: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+		font-size: 0.92em;
+	}
+
+	h1 {
+		font-size: 18pt;
+		line-height: 1.15;
+		margin: 0 0 2mm;
+		letter-spacing: -0.01em;
+	}
+
+	.sub {
+		color: var(--muted);
+		margin: 0 0 5mm;
+		font-size: 10pt;
+	}
+
+	h2 {
+		font-size: 12.5pt;
+		margin: 4.4mm 0 1.6mm;
+		padding-bottom: 1.5mm;
+		border-bottom: 1px solid var(--line);
+	}
+
+	h2 .n {
+		color: var(--clay);
+		font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+		font-size: 9pt;
+		margin-right: 2mm;
+	}
+
+	table { width: 100%; border-collapse: collapse; }
+
+	td {
+		padding: 1.3mm 0;
+		vertical-align: top;
+		border-bottom: 1px solid var(--line);
+	}
+
+	tr:last-child td { border-bottom: 0; }
+
+	td.k { width: 41%; padding-right: 5mm; }
+	td.k code { color: var(--clay); font-weight: 600; }
+
+	/* Figma-блок: ключі зеленим, щоб відділявся від решти таблиць */
+	.t-figma td.k code { color: var(--accent); }
+	td.v { color: var(--muted); }
+
+	a { color: var(--sky); text-decoration: none; border-bottom: 1px solid rgba(157, 212, 240, 0.4); }
+
+	pre {
+		background: var(--code-bg);
+		border: 1px solid var(--line);
+		border-radius: 3px;
+		padding: 3mm 4mm;
+		margin: 2mm 0 0;
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+	.note { color: var(--muted); font-size: 9.2pt; margin: 2mm 0 0; }
+
+	.foot {
+		margin-top: 3.5mm;
+		padding-top: 1.8mm;
+		border-top: 1px solid var(--line);
+		color: var(--muted);
+		font-size: 9pt;
+	}
+
+	.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8mm; }
+</style>
+</head>
+<body>
+
+<h1>Claude Code: від інтуїції до системи</h1>
+<p class="sub">Посилання й команди з воркшопу.</p>
+
+<h2><span class="n">01</span>Посилання</h2>
+<table>
+	<tr>
+		<td class="k"><a href="https://claude.com/plugins/claude-code-setup">claude.com/plugins/claude-code-setup</a></td>
+		<td class="v">офіційний плагін Anthropic: аудит вашого сетапу</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://www.skills.sh/vercel-labs/skills/find-skills">skills.sh/vercel-labs/skills/find-skills</a></td>
+		<td class="v">скіл <code>find-skills</code>: агент сам знаходить і ставить потрібне</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://www.skills.sh/mattpocock/skills/grill-me">skills.sh/mattpocock/skills/grill-me</a></td>
+		<td class="v">скіл <code>/grill-me</code>: допит по плану, раундами</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://github.com/figma/mcp-server-guide">github.com/figma/mcp-server-guide</a></td>
+		<td class="v">гайд Figma: правила MCP для Cursor і Claude</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://github.com/upstash/context7">github.com/upstash/context7</a></td>
+		<td class="v">MCP: актуальні доки бібліотек у сесію</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://mcp.mdn.mozilla.net/">mcp.mdn.mozilla.net</a></td>
+		<td class="v">MCP: веб-платформа — DOM, CSS, сумісність браузерів</td>
+	</tr>
+	<tr>
+		<td class="k"><a href="https://www.skills.sh/">skills.sh</a></td>
+		<td class="v">каталог відкритих скілів з рейтингом</td>
+	</tr>
+</table>
+
+<h2><span class="n">02</span>Вбудовані команди Claude Code</h2>
+<div class="cols">
+	<table>
+		<tr><td class="k"><code>/skills</code></td><td class="v">усі доступні скіли: звідки кожен і скільки контексту їсть</td></tr>
+		<tr><td class="k"><code>/doctor</code></td><td class="v">чим ви не користуєтесь і скільки це коштує</td></tr>
+		<tr><td class="k"><code>/fewer-permission-prompts</code></td><td class="v">зібрати allow із ваших транскриптів</td></tr>
+	</table>
+	<table>
+		<tr><td class="k"><code>/clear</code></td><td class="v">почати з чистого контексту</td></tr>
+		<tr><td class="k"><code>/fork</code></td><td class="v">копія розмови в окремій сесії</td></tr>
+		<tr><td class="k"><code>/btw</code></td><td class="v">питання «на полях», поки агент працює</td></tr>
+	</table>
+</div>
+
+<h2><span class="n">03</span>Файли сетапу</h2>
+<table>
+	<tr><td class="k"><code>CLAUDE.md</code></td><td class="v">у кожен запит; кожен рядок має змінювати поведінку</td></tr>
+	<tr><td class="k"><code>CLAUDE.local.md</code></td><td class="v">особисте, у <code>.gitignore</code></td></tr>
+	<tr><td class="k"><code>.claude/settings.json</code></td><td class="v">командні дозволи: allow / ask / deny</td></tr>
+	<tr><td class="k"><code>.claude/settings.local.json</code></td><td class="v">ваші MCP-дозволи й середовище</td></tr>
+	<tr><td class="k"><code>.claude/commands/</code></td><td class="v">свої команди; підтека дає префікс</td></tr>
+	<tr><td class="k"><code>.claude/skills/</code></td><td class="v">проєктні скіли; user-рівень перекриває їх</td></tr>
+	<tr><td class="k"><code>.claude/rules/</code></td><td class="v">правила, на які посилається CLAUDE.md</td></tr>
+	<tr><td class="k"><code>.mcp.json</code></td><td class="v">MCP-сервери проєкту</td></tr>
+	<tr><td class="k"><code>~/.claude/skills/</code></td><td class="v">глобальний шар, який ви приносите з собою</td></tr>
+</table>
+
+<h2><span class="n">04</span>Figma MCP</h2>
+<table class="t-figma">
+	<tr><td class="k"><code>Figma Desktop</code></td><td class="v">MCP-сервер живе в програмі, не в браузері</td></tr>
+	<tr><td class="k"><code>Dev Mode</code> / <code>Full seat</code></td><td class="v">далі в панелі <code>Inspect</code> увімкнути MCP</td></tr>
+	<tr><td class="k"><code>Copy frame link → Paste to agent</code></td><td class="v">посилання на конкретний фрейм із <code>node-id</code></td></tr>
+	<tr><td class="k"><code>figma-to-code.md</code></td><td class="v">свої правила: <code>.cursor/rules</code> або <code>.claude/skills</code></td></tr>
+</table>
+
+<p class="foot">PettersonApps · матеріали воркшопу</p>
+
+</body>
+</html>
